@@ -1,0 +1,262 @@
+
+.logo{
+    color: black;
+    font-size: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.right-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.cart-btn{
+    color: white;
+    background-color: #ed3af7;
+    width: 90px;
+}
+
+.login-btn{
+  border: 1px solid rgb(235, 54, 255);
+  color: #e619f9;
+}
+.login-btn:hover{
+  border: none;
+  background-color: #e619f9;
+  color: white;
+}
+
+    .navbar{
+        height: 80px;
+        background-color: #ffffff;
+    }
+   .navbar-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .navbar-search{
+      width: 60%;
+      color: black;
+      border-radius: 20px;
+      text-align: center;
+      background-color: #ffc7fa;
+      border: none;
+    }
+    .category-item {
+      display: inline-block;
+      text-align: center;
+      padding: 10px 20px;
+      color: #555;
+      font-weight: 500;
+      width: 100px;
+    }
+    .category-select{
+      background-color: #ffc7fa;
+      color: rgb(0, 0, 0);
+      border: none;
+      border-radius: 20px;
+      padding: 0px 10px;
+    }
+    .category-item:hover {
+      color: #ffb0f3;
+      cursor: pointer;
+    }
+    .category-item i {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    .category-bar {
+    overflow-x: auto;
+    white-space: nowrap;
+      background: linear-gradient(to right, #f9e5ff, #f9e5ff);
+    padding: 10px;
+    height: 80px;
+  }
+
+  .category-button {
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 50px;
+    font-weight: 500;
+    color: white;
+    background: linear-gradient(135deg, #e6c0f3 0%, #c925ff 100%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    display: inline-flex;
+    align-items: center;
+    /* gap: 10px; */
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+
+  .category-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #e619f9 0%, #f3d3ff 100%);
+  }
+
+  .category-button i {
+    font-size: 18px;
+  }
+
+    h2 {
+      text-align: center;
+      font-size: 32px;
+      color: #ffffff;
+      margin-bottom: 30px;
+    }
+
+    h3 {
+      margin-top: 50px;
+      color: #00ac89;
+      font-size: 26px;
+      border-left: 6px solid #010101;
+      padding-left: 15px;
+    }
+
+    .subcategory-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 15px 10px;
+      scroll-behavior: smooth;
+      min-height: 300px;
+    }
+
+.subcategory-card {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 250px;
+  border-radius: 16px;
+box-shadow: 0 10px 20px rgba(255, 3, 217, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  padding: 10px;
+  background: white; /* ensures no background bleed */
+}
+
+.subcategory-card:hover {
+  transform: scale(1.07);
+  box-shadow: 0 12px 25px rgba(230, 25, 249, 0.357); /* deeper purple on hover */
+}
+
+
+    .subcategory-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .subcategory-card h4 {
+      font-size: 18px;
+      color: #34495e;
+      margin: 10px 0 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Scrollbar style for subcategory scroll */
+    .subcategory-container{
+      background-color: #ffffff;
+      padding: 30px;
+    }
+    .subcategory-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .subcategory-container::-webkit-scrollbar-track {
+      background: #f0f0f0;
+      border-radius: 10px;
+    }
+
+    .subcategory-container::-webkit-scrollbar-thumb {
+      background: #ff0ee3;
+      border-radius: 10px;
+    }
+
+    .subcategory-container::-webkit-scrollbar-thumb:hover {
+      background: #da55ff;
+    }
+    #searchResults, #searchRes {
+      display: none;
+    }
+/* 
+    #searchInput{
+      background-color: #f6d6fe;
+    } */
+    .searchCard{
+      height: 350px;
+      width: 250px;
+    }
+     .price-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 3px;
+    }
+
+    .original-price {
+      font-size: 14px;
+      color: #999;
+      text-decoration: line-through;
+    }
+
+    .discounted-price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #2ecc71;
+    }
+
+    .you-save {
+      font-size: 14px;
+      color: #e67e22;
+      margin-bottom: 8px;
+    }
+    
+    .form-select{
+         background-color: #f6d6fe;
+         border: none;
+         padding: 0px 10px; 
+         border-radius: 10px;
+    }
+
+    .unit {
+      font-size: 14px;
+      font-weight: bold;
+      color: #3498db;
+    }
+    .discount-badge {
+      top: 10px;
+      left: 10px;
+      background: #e74c3c;
+      color: white;
+      padding: 5px 10px;
+      font-size: 13px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .sm-logo{
+        display: flex;
+        gap: 15px;
+        font-size: 25px;
+    }
+    .row-in{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }

@@ -1,0 +1,90 @@
+.add-category-container {
+  background: linear-gradient(to right, #ffc3ff, #fdb8ff); /* Login-style gradient */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.add-category-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 600px;
+  padding: 40px;
+}
+
+.add-category-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: bold;
+  color: #000;
+}
+.add-category-container h3 {
+  border: none;       
+  padding-left: 0;    
+  margin-left: 0;     
+}
+.form-control {
+  border: 2px solid #ccc;   /* thicker visible border */
+  border-radius: 10px;      /* keep your rounded style */
+  background-color: #fff;   /* white background so it's not transparent */
+}
+
+.form-control:focus {
+  border-color: #ff2dfc;    /* green border when focused */
+  box-shadow: 0 0 5px rgba(255, 0, 200, 0.5); /* subtle glow */
+}
+
+
+/* Primary Add button */
+.btn-custom {
+  background: #ff35f5;
+  color: #ffffff;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+  border: none;
+}
+
+.btn-custom:hover {
+  background-color: #a000a6e4;
+  color: #fff;
+}
+
+/* Cancel button */
+.btn-secondary {
+  border-radius: 25px;
+  padding: 10px 20px;
+  background: #ff35f5;
+  border: none;
+}
+
+/* View button */
+.btn-view {
+  background-color: #536dffe4;
+  color: #ffffff;
+  border-radius: 25px;
+  padding: 10px 25px;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background-color: #8100d7;
+  color: #fff;
+}
+
+.btn-view:hover {
+  background-color: #cb00d2;
+  color: #fff;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #000;
+}

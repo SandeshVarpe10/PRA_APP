@@ -1,0 +1,15 @@
+ .navbar-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .navbar-search {
+      width: 50%;
+    }
+
+  body{
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #f9e5ff, #f9e5ff);
+    }

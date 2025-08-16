@@ -1,0 +1,111 @@
+/* General container styling */
+.container {
+  max-width: 800px;
+  
+}
+
+/* Form container card */
+.form-container {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease-in-out;
+}
+
+.form-container:hover {
+  transform: translateY(-2px);
+}
+
+/* Heading style */
+.form-container h2 {
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #000000;
+}
+
+/* Label styling */
+.form-group label {
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Input and select fields - more specific to override Bootstrap */
+.form-container .form-control.formData {
+  border: 1px solid #ced4da !important; /* Force visible border */
+  border-radius: 8px;
+  padding: 10px 14px;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+  box-shadow: none; /* Remove Bootstrap's inner shadows */
+}
+
+/* On focus */
+.form-container .form-control.formData:focus {
+  border: 1px solid #ff30e7 !important;
+  box-shadow: 0 0 0 0.15rem rgba(255, 0, 191, 0.25) !important;
+  outline: none;
+}
+
+/* File input */
+.form-container input[type="file"].formData {
+  padding: 6px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+/* Textarea */
+textarea.formData {
+  resize: none;
+}
+
+/* File input custom look */
+input[type="file"].formData {
+  padding: 6px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+/* Button styling */
+.btn-success {
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+  background-color: #e96fff;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #df27ff;
+}
+
+/* Alert styling */
+.alert {
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 0.95rem;
+}
+
+.alert .close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Smooth fade for alerts */
+.alert-dismissible {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
