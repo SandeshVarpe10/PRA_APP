@@ -13,6 +13,20 @@ exports.verifyUserData=(email)=>{
          })
     })
 }
+
+exports.getUsers=()=>{
+    return new Promise((resolve,reject)=>{
+        db.query("select * from users",(err,result)=>{
+            if(err)
+            {
+                reject(err)
+            }else{
+                resolve(result);
+            }
+        })
+    })
+}
+
 exports.SaveUserData=(name, email, password, age, photo, type, created_at)=>{
     return new Promise((resolve,reject)=>{
         db.query("insert into users values('0',?,?,?,?,?,?,?)",[name,email,password,age,photo,type,created_at],(err,result)=>{

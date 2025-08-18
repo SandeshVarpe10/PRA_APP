@@ -19,12 +19,12 @@
 .cart-btn{
     color: white;
     background-color: #ed3af7;
-    width: 90px;
 }
 
 .login-btn{
   border: 1px solid rgb(235, 54, 255);
   color: #e619f9;
+  background-color: #e619f9;
 }
 .login-btn:hover{
   border: none;
@@ -40,6 +40,7 @@
       flex: 1;
       display: flex;
       justify-content: center;
+      align-items: center;
     }
     .navbar-search{
       width: 60%;

@@ -10,7 +10,8 @@ export default function AddCategory() {
 
   const [msg, setMsg] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let promise = service.saveCategory(formData);
     promise
       .then((res) => {

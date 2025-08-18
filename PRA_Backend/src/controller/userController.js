@@ -66,6 +66,23 @@ exports.SaveUserData = async (req, res) => {
 };
 
 
+exports.getAllUsers=async (req,res)=>{
+    try{
+        let promise=usermodel.getUsers();
+        promise.then((result) => {
+        if (result && result.length > 0) {
+            res.status(200).json({result});
+        } 
+    }).catch((err) => {
+        res.status(404).json(err);
+    });
+    }catch(err){
+        console.error("Error fetching users:", err);
+        return res.status(500)
+    }
+}
+
+
 exports.LoginUserData = async (req, res) => {
     try {
         const { email, password, type } = req.body; 

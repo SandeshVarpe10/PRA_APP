@@ -1,0 +1,55 @@
+.update-category-wrapper {
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.update-card {
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  width: 500px;
+}
+
+.form-control {
+  border-radius: 10px;
+}
+
+.btn-custom {
+  background-color: #28a745;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+.btn-custom:hover {
+  background-color: #218838;
+}
+
+.btn-secondary {
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 10px 20px;
+}
+
+.btn-view {
+  background-color: #ffc107;
+  color: #000;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.btn-view:hover {
+  background-color: #e0a800;
+}
+
+.info-box {
+  border: 1px solid #17a2b8;
+  border-radius: 10px;
+  padding: 10px;
+  min-height: 60px;
+}

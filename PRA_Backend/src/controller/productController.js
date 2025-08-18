@@ -12,16 +12,15 @@ exports.saveCategory = async (req, res) => {
         if (existing.length > 0) {
             return res.status(200).json({ msg:"Category Allready Exists" }); 
         }
-
-    
         const result = await productmodel.saveCategory(categoryName, categoryDescription);
-        return res.status(200).json({ msg }); 
+        return res.status(200).json({ msg,data: result }); 
 
     } catch (err) {
         console.error("Error saving category:", err);
         return res.status(500).json({ msg: "Server error" });
     }
 };
+
 exports.viewCategory = async (req, res) => {
   try {
     const categories = await productmodel.getAllCategories();
@@ -58,67 +57,70 @@ exports.liveSearch = (req, res) => {
 };
 
 
-exports.deleteCategory =  (req, res) => {
-    let categoryId =req.params.Did;
+exports.deleteCategory = async (req, res) => {
+  try {
+    let categoryId = req.params.Did;
+    await productmodel.deleteCategory(categoryId);
 
-    let promise= productmodel.deleteCategory(categoryId);
-    promise.then((result=>{
-        let p= productmodel.getAllCategories();
-        p.then((r)=>{
-            res.render("ViewCategory.ejs", { categories: r, msg: "Category deleted successfully!" });
-        })
-        p.catch((err) => {
-            res.render("ViewCategory.ejs", { categories:null,msg: "Error fetching categories!" });
-        });
-    })
-    ).catch((err) => {
-        res.render("ViewCategory.ejs", { categories:null, msg: "Error deleting category!" });
-    });
-    
-}
+    let categories = await productmodel.getAllCategories();
+    res.json({ success: true, categories, msg: "Category deleted successfully!" });
+  } catch (err) {
+    console.error("Error deleting category:", err);
+    res.status(500).json({ success: false, categories: null, msg: "Error deleting category!" });
+  }
+};
+
 
 exports.updateCategoryPage = async (req, res) => {
-    let categoryId = req.params.Uid;
-    let promise = productmodel.getCategoryById(categoryId);
-    promise.then((result) => {
-        if (result) {
-            res.render("UpdateCategory.ejs", { category:result[0]});
-        } else {
-            res.render("UpdateCategory.ejs", );
-        }
-    });
+  let categoryId = req.params.Uid;
+  let result = await productmodel.getCategoryById(categoryId);
+
+  if (result && result.length > 0) {
+    res.json({ success: true, category: result[0] }); // ✅ send JSON
+  } else {
+    res.json({ success: false, message: "Category not found" });
+  }
 };
 
 exports.updateSaveCategory = async (req, res) => {
-    let categoryId = req.body.category_id;
-    let categoryName = req.body.categoryName;
-    let categoryDescription = req.body.categoryDescription;
-    let promise = productmodel.updateSaveCategory(categoryId, categoryName, categoryDescription);
-    promise.then((result) => {
-        if (result) {
-            let p = productmodel.getAllCategories();
-            p.then((r) => {
-                res.render("ViewCategory.ejs", { categories: r, msg: "Category updated successfully!" });
-            });
-            p.catch((err) => {
-                res.render("ViewCategory.ejs", { categories: null, msg: "Error fetching categories!" });
-            });
-        } else {
-            res.render("ViewCategory.ejs", { categories:null,msg: "Error updating category!" });
-        }
-    }).catch((err) => {
-        res.render("ViewCategory.ejs", { categories:null, msg: "Error updating category!" });
-    });
-    
-}
+  let { categoryId, categoryName, categoryDescription } = req.body;
+
+  try {
+    let result = await productmodel.updateSaveCategory(
+      categoryId,
+      categoryName,
+      categoryDescription
+    );
+
+    if (result.affectedRows > 0) {
+      res.json({ success: true, message: "Category updated successfully" });
+    } else {
+      res.json({ success: false, message: "Update failed" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+
 
 exports.viewCategoryDetails = async (req, res) => {
-    let category_id=req.params.Cid;
-     let promise=productmodel.getCategoryById(category_id);
-     promise.then((result) => {
-            res.render("ViewCategoryDetails.ejs", { category: result[0] });
-    });
+  try {
+    let category_id = req.params.Cid;
+    let result = await productmodel.getCategoryById(category_id);
+
+    if (result.length > 0) {
+      res.json({ success: true, category: result[0] });
+    } else {
+      res.status(404).json({ success: false, message: "Category not found" });
+    }
+  } catch (err) {
+    console.error("Error fetching category details:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
 };
+
 
 exports.addSubCategoryPage = (req, res) => {
     let categoryId = req.params.Cid;
@@ -281,9 +283,19 @@ exports.addProductPage = (req, res) => {
 }
 
 exports.saveProduct = async (req, res) => {
-    const { name, subcategoryId, brand, description, stockUnit, stock, price, discount, organic, createdAt, updatedAt } = req.body;
-    const image = req.file ? req.file.filename : null;
+    const {
+        name,
+        subcategoryId,
+        brand,
+        description,
+        stockUnit,
+        stock,
+        price,
+        discount,
+        organic,
+    } = req.body;
 
+    const image = req.file ? req.file.filename : null;
 
     const created_at = new Date().toISOString().slice(0, 10);
     const updated_at = new Date().toISOString().slice(0, 10);
@@ -304,14 +316,21 @@ exports.saveProduct = async (req, res) => {
             updated_at
         );
 
-        const subcategories = await productmodel.getAllSubCategories();
-        res.render("AddProduct.ejs", { subcategories, msg: result });
+        return res.status(200).json({
+            msg: "Product saved successfully",
+            data: result
+        });
 
     } catch (err) {
-        const subcategories = await productmodel.getAllSubCategories();
-        res.render("AddProduct.ejs", { subcategories, msg: err });
+        console.error("Error saving product:", err);
+        return res.status(500).json({
+            msg: "Error saving product",
+            error: err.message
+        });
     }
 };
+
+
 
 
 exports.viewProducts = async (req, res) => {

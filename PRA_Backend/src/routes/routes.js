@@ -16,6 +16,9 @@ router.get("/logout", userCtrl.logoutUser);
 router.get("/profile",getUserFromToken,userCtrl.ShowUserProfile);
 
 
+//user
+router.get("/get-users",userCtrl.getAllUsers);
+
 //category routes
 router.get("/add-category", productCtrl.addCategoryPage);
 router.post("/savecategory", productCtrl.saveCategory);

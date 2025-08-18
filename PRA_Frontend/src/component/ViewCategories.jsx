@@ -5,19 +5,39 @@ import Service from "../service/service";
 
 export default function ViewCategories() {
   const [categories, setCategories] = useState([]);
+  const [msg, setMsg] = useState("");
 
-  useEffect(() => {
+  // Fetch all categories
+  const fetchCategories = () => {
     Service.getCategory()
       .then((res) => {
         setCategories(res.data.categories || []);
       })
       .catch((err) => console.error("Error fetching data:", err));
+  };
+
+  useEffect(() => {
+    fetchCategories();
   }, []);
+
+  // ✅ Delete category
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this category?")) {
+      Service.deleteCategory(id)
+        .then((res) => {
+          setMsg(res.data.msg || "Category deleted successfully!");
+          setCategories((prev) => prev.filter((cat) => cat.id !== id));
+        })
+        .catch(() => setMsg("Error deleting category!"));
+    }
+  };
 
   return (
     <div className="view-container">
       <div className="table-wrapper shadow-lg">
         <h2 className="title">Categories</h2>
+
+        {msg && <div className="alert alert-info">{msg}</div>}
 
         {/* Search Bar */}
         <div className="search-bar">
@@ -51,12 +71,12 @@ export default function ViewCategories() {
                       ✏️ Update
                     </Link>
 
-                    <Link
-                      to={`/deleteCategory/${cat.id}`}
+                    <button
                       className="btn btn-delete"
+                      onClick={() => handleDelete(cat.id)}
                     >
                       🗑️ Delete
-                    </Link>
+                    </button>
 
                     <Link
                       to={`/viewCategoryDetails/${cat.id}`}
@@ -66,8 +86,12 @@ export default function ViewCategories() {
                     </Link>
 
                     {/* Dropdown */}
-                    <div className="dropdown">
-                      <button className="btn btn-view-prod dropdown-toggle">
+                    <div className="dropdown d-inline">
+                      <button
+                        className="btn btn-view-prod dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                      >
                         📦 Sub-Categories
                       </button>
                       <div className="dropdown-menu">

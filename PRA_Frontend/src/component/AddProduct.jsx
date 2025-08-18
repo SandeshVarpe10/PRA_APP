@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/addProduct.css";
+import Service from "../service/service"; // <-- import your service
 
-function AddProduct({ subcategories = [], msg }) {
+function AddProduct() {
   const [formData, setFormData] = useState({
     name: "",
     image: "",
@@ -15,6 +16,19 @@ function AddProduct({ subcategories = [], msg }) {
     organic: "",
   });
 
+  const [responseMsg, setResponseMsg] = useState(null);
+  const [subcategories, setSubcategories] = useState([]);
+
+  useEffect(() => {
+    Service.getAllSubcategories()
+      .then((res) => {
+        // Check the structure of res.data
+        const subs = res.data.subcategories || res.data || [];
+        setSubcategories(subs);
+      })
+      .catch((err) => console.error("Failed to load subcategories", err));
+  }, []);
+
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     setFormData({
@@ -25,8 +39,18 @@ function AddProduct({ subcategories = [], msg }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-    // TODO: Send to backend using fetch or axios
+    Service.saveProduct(formData)
+      .then((res) => {
+        console.log("Response:", res.data);
+        setResponseMsg({
+          type: "success",
+          text: "Product saved successfully!",
+        });
+      })
+      .catch((err) => {
+        console.error("Error:", err);
+        setResponseMsg({ type: "danger", text: "Failed to save product." });
+      });
   };
 
   return (
@@ -34,12 +58,13 @@ function AddProduct({ subcategories = [], msg }) {
       <div className="form-container">
         <h2>Add Product</h2>
 
-        {msg && (
+        {/* Show response message */}
+        {responseMsg && (
           <div
-            className={`alert alert-${msg.type || "info"} alert-dismissible fade show`}
+            className={`alert alert-${responseMsg.type} alert-dismissible fade show`}
             role="alert"
           >
-            {msg.text || msg}
+            {responseMsg.text}
             <button type="button" className="close" data-dismiss="alert">
               <span>&times;</span>
             </button>
@@ -85,11 +110,15 @@ function AddProduct({ subcategories = [], msg }) {
               required
             >
               <option value="">-- Choose Subcategory --</option>
-              {subcategories.map((subcat) => (
-                <option key={subcat.subcategory_id} value={subcat.subcategory_id}>
-                  {subcat.subcategory_name}
-                </option>
-              ))}
+              {Array.isArray(subcategories) &&
+                subcategories.map((subcat) => (
+                  <option
+                    key={subcat.subcategory_id}
+                    value={subcat.subcategory_id}
+                  >
+                    {subcat.subcategory_name}
+                  </option>
+                ))}
             </select>
           </div>
 

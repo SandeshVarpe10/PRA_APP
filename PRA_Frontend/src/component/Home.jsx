@@ -39,7 +39,7 @@ function Home() {
               <form
                 action="/search-live"
                 method="GET"
-                class="d-flex navbar-center mt-2 mt-lg-0"
+                class="d-flex navbar-center h "
               >
                 <select
       className="category-select me-2"

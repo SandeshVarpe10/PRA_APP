@@ -82,7 +82,7 @@ function AdminDashboard() {
             </div>
             {openDropdown === "customer" && (
               <div className="sidebar-dropdown">
-                <Link to="/view-customers" className="dropdown-item">👥 View Customers</Link>
+                <Link to="/get-users" className="dropdown-item">👥 View Customers</Link>
               </div>
             )}
           </div>
