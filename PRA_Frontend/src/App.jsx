@@ -31,6 +31,8 @@ function App() {
           <Route path='/adminDashboard' element={<AdminDashboard/>}></Route>
           <Route path='/edit-profile/:uid' element={<EditAdminProfile/>}></Route>
           <Route path='/userDashboard' element={<UserDashboard/>}></Route>
+          <Route path='/edit-profile/:uid' element={<EditAdminProfile/>}></Route>
+          <Route path='/userDashboard' element={<UserDashboard/>}></Route>
           <Route path='/add-product' element={<AddProduct/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
           <Route path='/add-category' element={<AddCategory/>}></Route>

@@ -10,8 +10,18 @@ const { getUserFromToken } = require("../middlware/checkHomeToken.js");
 //router.get("/", userCtrl.homePage);
 //router.get("/login", userCtrl.LoginPage);
 //router.get("/register", userCtrl.RegisterPage);
+//router.get("/", userCtrl.homePage);
+//router.get("/login", userCtrl.LoginPage);
+//router.get("/register", userCtrl.RegisterPage);
 router.post("/registerdata", upload.single("photo"), userCtrl.SaveUserData);
 router.post("/logindata", userCtrl.LoginUserData);
+router.get("/Profile", getUserFromToken, userCtrl.getAdminProfile);
+router.get("/UpdataAdminProfile/:uid",userCtrl.getAdminData)
+router.put("/updatedData/:uid", userCtrl.saveUpdatedAdmin);
+
+//router.get("/adminDashboard", getUserFromToken, userCtrl.adminDashboard);
+router.get("/Adminlogout", userCtrl.logoutUser);
+//router.get("/profile",getUserFromToken,userCtrl.ShowUserProfile);
 router.get("/Profile", getUserFromToken, userCtrl.getAdminProfile);
 router.get("/UpdataAdminProfile/:uid",userCtrl.getAdminData)
 router.put("/updatedData/:uid", userCtrl.saveUpdatedAdmin);

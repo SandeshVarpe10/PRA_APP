@@ -21,6 +21,4 @@ app.use(express.json());
 
 app.use("/",router);
 
-app.set("views engine","ejs");
-
 module.exports=app;
