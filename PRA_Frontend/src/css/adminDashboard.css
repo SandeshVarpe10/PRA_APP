@@ -1,60 +1,181 @@
+/* ===== General Theme ===== */
 .admin-dashboard-wrapper {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0a1a2f; /* dark blue base */
+  color: #e0e0e0;
   min-height: 100vh;
-  background-color: #ffd3fe;
 }
 
-.admin-dashboard-wrapper h3{
-border: none;       
-  padding-left: 0;    
-  margin-left: 0;
-  color: black;
+/* ===== Navbar ===== */
+.navbar {
+  background: linear-gradient(90deg, #ff4d6d, #3b5998); /* pink to dark blue gradient */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
 }
 
-.navbar-custom {
-  background: linear-gradient(to right, #000000, #373737);
+.navbar-brand img {
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  transition: transform 0.3s;
 }
 
+.navbar-brand img:hover {
+  transform: scale(1.1);
+}
+
+/* My Profile Button in Navbar */
+.myprofile-btn {
+  margin-left: auto;
+  background: linear-gradient(90deg, #ff4d6d);
+  color: #fff;
+  border: none;
+  padding: 10px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 25px;
+}
+
+.myprofile-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255,77,109,0.5), 0 5px 15px rgba(59,89,152,0.5);
+}
+
+/* ===== Sidebar ===== */
 .sidebar {
-  width: 400px;
-  min-height: calc(100vh - 56px); /* 56px = navbar height */
-  background-color: #2e2c2e;
+  width: 250px;
+  background: #0b1b33; /* dark blue sidebar */
+  min-height: calc(100vh - 56px);
+  padding-top: 30px;
+}
+
+.sidebar h5 {
+  color: #ff4d6d;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .sidebar-item {
-  margin-bottom: 20px;
-  background-color: #ffffff;
-  color: black;
+  margin-bottom: 0.5rem;
 }
 
 .sidebar-link {
+  color: #e0e0e0;
   cursor: pointer;
-  padding: 10px;
+  padding: 10px 15px;
   display: block;
-  color: rgb(0, 0, 0);
-  background: #ffffff;
-  transition: background 0.2s;
+  border-radius: 8px;
+  transition: 0.3s;
 }
-
-.sidebar-link:hover {
-  background: #f310ff;
+.dropdown-item{
   color: white;
 }
-
-.sidebar-dropdown {
-  margin-left: 15px;
-  margin-top: 5px;
+.sidebar-link:hover {
+  background: linear-gradient(90deg, #ff4d6d, #3b5998);
+  color: #fff;
 }
 
-.dropdown-item {
-  display: block;
-  padding: 6px 12px;
-  text-decoration: none;
-  color: #000000;
-  font-size: 14px;
+/* ===== Content Area ===== */
+.flex-grow-1 {
+  padding: 50px;
 }
 
-.dropdown-item:hover {
+/* ===== Profile Drawer ===== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  /* border: 1px solid black; */
-  background: #fcc2ff;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 99;
+}
+
+.profile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100%;
+  background: linear-gradient(180deg, #0b1b33, #13264d);
+  z-index: 100;
+  box-shadow: -2px 0 15px rgba(0,0,0,0.7);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-photo-large {
+  width: 250px;
+  height: 250px;
+  border-radius: 20%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #ff4d6d;
+}
+
+.profile-info h2 {
+  color: #ff4d6d;
+  margin-bottom: 5px;
+}
+
+.profile-info p {
+  color: #e0e0e0;
+  margin: 2px 0;
+}
+
+/* ===== Profile Actions Buttons ===== */
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn-edit {
+  background: linear-gradient(90deg, #db0d32, #3b5998);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-edit:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255,77,109,0.5), 0 5px 15px rgba(59,89,152,0.5);
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* ===== Animations ===== */
+@keyframes slideIn {
+  from { right: -400px; opacity: 0; }
+  to { right: 0; opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
