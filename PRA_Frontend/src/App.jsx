@@ -1,12 +1,12 @@
+import ReactDom from 'react-dom'
+import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import './App.css'
+
 import AdminDashboard from './component/AdminDashboard';
 import Home from './component/Home'
 import Login from './component/Login'
 import AddProduct from './component/AddProduct';
 import Register from './component/Register';
-
-import ReactDom from 'react-dom'
-import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import AddCategory from './component/AddCategory';
 import ViewProducts from './component/ViewProduct';
 import ViewCategories from './component/ViewCategories';
@@ -16,6 +16,8 @@ import ViewSubcategory from './component/ViewSubCategory';
 import ViewUsers from './component/ViewUsers';
 import ViewCatDetail from './component/viewCatDetail';
 import UpdateCategory from './component/UpdateCategory';
+import UserProfile from './component/UserProfile';
+import Cart from './component/Cart';
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
           <Route path='/get-users'  element={<ViewUsers/>}></Route>
           <Route path='/viewCategoryDetails/:id'  element={<ViewCatDetail/>}></Route>
           <Route path='/updateCategory/:id'  element={<UpdateCategory/>}></Route>
+          <Route path='/user-profile'  element={<UserProfile/>}></Route>
+          <Route path='/cart'  element={<Cart/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

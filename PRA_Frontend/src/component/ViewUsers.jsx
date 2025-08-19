@@ -17,7 +17,7 @@ export default function ViewUsers() {
   }, []);
 
   return (
-    <div className="container my-5">
+    <div className="container-fluid my-5 px-5">
       <div className="card shadow-lg border-0 rounded-4">
         <h2 className="card-header text-dark text-center rounded-top-4">
           Users List
@@ -30,6 +30,7 @@ export default function ViewUsers() {
                   <th>ID</th>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Password</th>
                   <th>Age</th>
                   <th>Photo</th>
                   <th>Role</th>
@@ -43,11 +44,12 @@ export default function ViewUsers() {
                       <td className="fw-semibold">{user.id}</td>
                       <td>{user.name}</td>
                       <td>{user.email}</td>
+                      <td>{user.password}</td>
                       <td>{user.age}</td>
                       <td>
                         {user.photo ? (
                           <img
-                            src={`http://localhost:3000/uploads/${user.photo}`} // adjust path
+                            src={`http://localhost:3000/images/${user.photo}`} 
                             alt={user.name}
                             className="rounded-circle"
                             width="50"

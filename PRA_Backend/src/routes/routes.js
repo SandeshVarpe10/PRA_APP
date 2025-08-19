@@ -2,6 +2,8 @@ let express = require("express");
 let router = express.Router();
 let userCtrl = require("../controller/userController");
 let productCtrl = require("../controller/productController");
+const cartController = require("../controller/cartController.js");
+
 let upload = require("../middlware/PhotoUpload.js");
 const { getUserFromToken } = require("../middlware/checkHomeToken.js");
 
@@ -52,5 +54,12 @@ router.get('/search-live', productCtrl.liveSearch);
 router.get("/updateProduct/:product_id", productCtrl.updateProductPage);
 router.post("/productupdatesave/:product_id", upload.single("image"), productCtrl.updateProductSave);
 router.get("/deleteProduct/:product_id", productCtrl.deleteProduct);
+
+
+//cart routes
+router.post("/cart/add", cartController.addToCart);
+router.get("/cart/:userId", cartController.getCart);
+router.delete("/cart/:userId/:productId", cartController.removeFromCart);
+router.put("/cart/:userId/:productId", cartController.updateQuantity);
 
 module.exports = router;

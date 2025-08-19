@@ -1,4 +1,4 @@
-git checkout main
+git git checkout main
 git pull origin main            
 git checkout -b mahesh_branch 
 git add .

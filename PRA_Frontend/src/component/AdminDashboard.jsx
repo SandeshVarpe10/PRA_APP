@@ -26,7 +26,7 @@ function AdminDashboard() {
             MyShop Admin
           </Link>
           <div className="ms-auto">
-            <Link to="/profile" className="btn btn-outline-light">
+            <Link to="/user-profile" className="btn text-bg-light">
               My Profile
             </Link>
           </div>

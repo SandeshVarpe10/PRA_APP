@@ -14,7 +14,7 @@ function Home() {
       })
       .catch((err) => console.error("Error fetching data:", err));
 
-      Service.getSubCat()
+    Service.getSubCat()
       .then((res) => {
         setSubcategories(res.data.subcategories || []);
       })
@@ -41,17 +41,14 @@ function Home() {
                 method="GET"
                 class="d-flex navbar-center h "
               >
-                <select
-      className="category-select me-2"
-      name="category"
-    >
-      <option value="">All Categories</option>
-      {categories.map((cat) => (
-        <option key={cat.id} value={cat.id}>
-          {cat.category_name}
-        </option>
-      ))}
-    </select>
+                <select className="category-select me-2" name="category">
+                  <option value="">All Categories</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.category_name}
+                    </option>
+                  ))}
+                </select>
 
                 <input
                   class="navbar-search"
@@ -62,12 +59,12 @@ function Home() {
                 />
               </form>
               <div className="d-flex gap-3 right-btn">
-                  <Link to={"/login"} className="">
-                    <button class="btn login-btn">Login</button>
-                  </Link>
-                  <Link to={"/cart"} className="cart-btn">
-                    <button class="btn cart-btn">Cart🛒</button>
-                  </Link>
+                <Link to={"/login"} className="">
+                  <button class="btn login-btn">Login</button>
+                </Link>
+                <Link to={"/cart"} className="cart-btn">
+                  <button class="btn cart-btn">Cart🛒</button>
+                </Link>
               </div>
             </div>
           </div>
@@ -77,7 +74,21 @@ function Home() {
       <div class="category-bar d-flex ">
         {subcategories.length > 0 ? (
           subcategories.map((cat) => (
-            <button key={cat.subcategory_name} className="category-button">
+            <button
+              key={cat.subcategory_id}
+              className="category-button"
+              onClick={() => {
+                const section = document.getElementById(
+                  `sub-${cat.subcategory_id}`
+                );
+                if (section) {
+                  section.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  });
+                }
+              }}
+            >
               <i className="bi bi-tag-fill"></i> {cat.subcategory_name}
             </button>
           ))
@@ -96,27 +107,31 @@ function Home() {
       <div id="searchResults" className="subcategory-container"></div>
 
       <div>
-      {categories.map((category) => (
-        <div key={category.id}>
-          <h3>{category.category_name}</h3>
-          <div className="subcategory-container">
-            {subcategories
-              .filter((sub) => sub.category_id === category.id)
-              .map((sub) => (
-                <a key={sub.subcategory_id} href={`/products/${sub.subcategory_id}`}>
-                  <div className="subcategory-card">
-                    <img
-                      src={`/public/shanghai.jpg`}
-                      alt={sub.subcategory_name}
-                    />
-                    <h4>{sub.subcategory_name}</h4>
-                  </div>
-                </a>
-              ))}
+        {categories.map((category) => (
+          <div key={category.id}>
+            <h3>{category.category_name}</h3>
+            <div className="subcategory-container">
+              {subcategories
+                .filter((sub) => sub.category_id === category.id)
+                .map((sub) => (
+                  <a
+                    key={sub.subcategory_id}
+                    href={`/products/${sub.subcategory_id}`}
+                    id={`sub-${sub.subcategory_id}`}
+                  >
+                    <div className="subcategory-card">
+                      <img
+                        src={`http://localhost:3000/images/${sub.image}`}
+                        alt={sub.subcategory_name}
+                      />
+                      <h4>{sub.subcategory_name}</h4>
+                    </div>
+                  </a>
+                ))}
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
 
       {/* Footer */}
       <footer className="bg-dark text-light pt-5 mt-5">
@@ -173,37 +188,37 @@ function Home() {
               <h5>Follow Us</h5>
               <div className="sm-logo">
                 <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                className="text-light me-3 fs-4"
-              >
-                <i className="bi bi-facebook"></i>
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noreferrer"
-                className="text-light me-3 fs-4"
-              >
-                <i className="bi bi-twitter"></i>
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                className="text-light me-3 fs-4"
-              >
-                <i className="bi bi-instagram"></i>
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="text-light fs-4"
-              >
-                <i className="bi bi-linkedin"></i>
-              </a>
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-light me-3 fs-4"
+                >
+                  <i className="bi bi-facebook"></i>
+                </a>
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-light me-3 fs-4"
+                >
+                  <i className="bi bi-twitter"></i>
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-light me-3 fs-4"
+                >
+                  <i className="bi bi-instagram"></i>
+                </a>
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-light fs-4"
+                >
+                  <i className="bi bi-linkedin"></i>
+                </a>
               </div>
             </div>
           </div>

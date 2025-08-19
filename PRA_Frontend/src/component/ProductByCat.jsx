@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; // ✅ import useParams
+import { useParams } from "react-router-dom"; 
 import "../css/productByCat.css";
 import service from "../service/service";
+import CartService from "../service/cartService.js";
 
 export default function ProductByCat() {
-  const { subcategoryId } = useParams(); // ✅ get from URL
+  const { subcategoryId } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!subcategoryId) return;
+  // 👇 You can fetch userId from localStorage/session/JWT later
+  const userId = 5;
 
+  useEffect(() => {
     setLoading(true);
     service
       .getProductBySubCat(subcategoryId)
       .then((res) => {
-        console.log("API Response:", res.data); // 👀 see actual structure
         setProducts(res.data);
         setLoading(false);
       })
@@ -25,6 +26,17 @@ export default function ProductByCat() {
         setLoading(false);
       });
   }, [subcategoryId]);
+
+  const addToCart = (product) => {
+    CartService.addToCarts(userId, product.product_id, 1)
+      .then(() => {
+        alert(`${product.product_name} added to cart!`);
+      })
+      .catch((err) => {
+        console.error("Error adding to cart:", err);
+        alert("Something went wrong while adding to cart.");
+      });
+  };
 
   if (loading) {
     return <h2 className="loading-text">Loading...</h2>;
@@ -64,41 +76,44 @@ export default function ProductByCat() {
               : "1 unit";
 
           return (
-            <>
+            <div
+              key={product.product_id}
+              className={`product-card ${index === 0 ? "highlight-card" : ""}`}
+            >
+              {discountPercent > 0 && (
+                <div className="discount-badge">{discountPercent}% OFF</div>
+              )}
               <a
-                key={product.product_id}
                 href={`/product/${product.product_id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <div
-                  className={`product-card ${
-                    index === 0 ? "highlight-card" : ""
-                  }`}
-                >
-                  {discountPercent > 0 && (
-                    <div className="discount-badge">{discountPercent}% OFF</div>
-                  )}
-                  <img
-                    className="product-img"
-                    src={`/images/${product.product_image}`}
-                    alt={product.product_name}
-                  />
-                  <div className="product-info">
-                    <div className="product-name">{product.product_name}</div>
-                    <div className="price-box">
-                      <div className="original-price">
-                        ₹{originalPrice.toFixed(2)}
-                      </div>
-                      <div className="discounted-price">
-                        ₹{discountedPrice.toFixed(2)}
-                      </div>
+                <img
+                  className="product-img"
+                  src={`http://localhost:3000/images/${product.product_image}`}
+                  alt={product.product_name}
+                />
+                <div className="product-info">
+                  <div className="product-name">{product.product_name}</div>
+                  <div className="price-box">
+                    <div className="original-price">
+                      ₹{originalPrice.toFixed(2)}
                     </div>
-                    <div className="you-save">You save ₹{saved.toFixed(2)}</div>
-                    <div className="unit">For {unitLabel}</div>
+                    <div className="discounted-price">
+                      ₹{discountedPrice.toFixed(2)}
+                    </div>
                   </div>
+                  <div className="you-save">You save ₹{saved.toFixed(2)}</div>
+                  <div className="unit">For {unitLabel}</div>
                 </div>
               </a>
-            </>
+
+              <button
+                className="add-to-cart-btn"
+                onClick={() => addToCart(product)}
+              >
+                🛒 Add to Cart
+              </button>
+            </div>
           );
         })}
       </div>

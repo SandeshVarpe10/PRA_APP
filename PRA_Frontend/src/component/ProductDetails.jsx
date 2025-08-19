@@ -47,7 +47,7 @@ const ProductDetails = () => {
         <div className="product-container">
       <img
         className="product-image"
-        src={`/images/${product.product_image}`}
+        src={`http://localhost:3000/images/${product.product_image}`}
         alt={product.product_name}
       />
 
