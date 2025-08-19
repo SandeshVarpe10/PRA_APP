@@ -5,18 +5,22 @@ let productCtrl = require("../controller/productController");
 let upload = require("../middlware/PhotoUpload.js");
 const { getUserFromToken } = require("../middlware/checkHomeToken.js");
 
-router.get("/", userCtrl.homePage);
-router.get("/login", userCtrl.LoginPage);
-router.get("/register", userCtrl.RegisterPage);
+//router.get("/", userCtrl.homePage);
+//router.get("/login", userCtrl.LoginPage);
+//router.get("/register", userCtrl.RegisterPage);
 router.post("/registerdata", upload.single("photo"), userCtrl.SaveUserData);
 router.post("/logindata", userCtrl.LoginUserData);
-router.get("/userProfile", getUserFromToken, userCtrl.userProfile);
-router.get("/adminDashboard", getUserFromToken, userCtrl.adminDashboard);
-router.get("/logout", userCtrl.logoutUser);
-router.get("/profile",getUserFromToken,userCtrl.ShowUserProfile);
+router.get("/Profile", getUserFromToken, userCtrl.getAdminProfile);
+router.get("/UpdataAdminProfile/:uid",userCtrl.getAdminData)
+router.put("/updatedData/:uid", userCtrl.saveUpdatedAdmin);
+
+//router.get("/adminDashboard", getUserFromToken, userCtrl.adminDashboard);
+router.get("/Adminlogout", userCtrl.logoutUser);
+//router.get("/profile",getUserFromToken,userCtrl.ShowUserProfile);
 
 
 //category routes
+/*
 router.get("/add-category", productCtrl.addCategoryPage);
 router.post("/savecategory", productCtrl.saveCategory);
 router.get("/view-category", productCtrl.viewCategory);
@@ -49,5 +53,5 @@ router.get('/search-live', productCtrl.liveSearch);
 router.get("/updateProduct/:product_id", productCtrl.updateProductPage);
 router.post("/productupdatesave/:product_id", upload.single("image"), productCtrl.updateProductSave);
 router.get("/deleteProduct/:product_id", productCtrl.deleteProduct);
-
+*/
 module.exports = router;

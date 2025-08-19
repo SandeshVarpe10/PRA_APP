@@ -4,7 +4,7 @@ let bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = "#4545#";
 
-exports.homePage = async (req, res) => {
+/*exports.homePage = async (req, res) => {
     try {
         let user = null;
 
@@ -29,18 +29,17 @@ exports.homePage = async (req, res) => {
             msg: "Something went wrong while loading home page."
         });
     }
-};
+};*/
 
-exports.LoginPage = (req, res) => {
+/*exports.LoginPage = (req, res) => {
     res.render("login.ejs", { msg: null });
-};
+};*/
 
-exports.RegisterPage = (req, res) => {
+/*exports.RegisterPage = (req, res) => {
     res.render("Register.ejs", { msg: null });
-};
+};*/
 
 exports.SaveUserData = async (req, res) => {
-    
     try {
         const { name, email, password, age } = req.body; 
         const photo = req.file?.filename || "default.jpg";
@@ -49,121 +48,151 @@ exports.SaveUserData = async (req, res) => {
 
         const existingUser = await usermodel.verifyUserData(email);
         if (existingUser && existingUser.length > 0) {
-            return res.render("Register.ejs", { msg: "User already exists" });
+            return res.status(400).json({ success: false, message: "User already exists" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
         await usermodel.SaveUserData(name, email, hashedPassword, age, photo, type, created_at); 
 
-        const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
-        res.cookie("token", token);
+        const token = jwt.sign({ email, type }, SECRET_KEY, { expiresIn: "1h" });
 
-        return res.redirect("/userProfile");
+        res.cookie("token", token, {
+            httpOnly: true,
+            maxAge: 3600000, // 1 hour
+            sameSite: "lax",
+            secure:false
+        });
+
+        return res.status(201).json({ success: true, message: "User registered successfully", email, type });
 
     } catch (err) {
-        res.render("Register.ejs", { msg: "Error: " + err.message });
+        console.error("Registration error:", err);
+        return res.status(500).json({ success: false, message: err.message });
     }
 };
 
-
+// Login
 exports.LoginUserData = async (req, res) => {
     try {
-        const { email, password, type } = req.body; 
+        const { email, password, type } = req.body;
 
-
-        let user;
-        let isMatch;
-
-        if (type === "admin") {
-            user = await usermodel.verifyUserData(email);
-        } else {
-            user = await usermodel.verifyUserData(email);
-        }
+        const user = await usermodel.verifyUserData(email);
         if (!user || user.length === 0) {
-            return res.render("login.ejs", { msg: "Invalid email or password" });
+            return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
 
+        let isMatch;
         if (type === "admin") {
-             isMatch = password===user[0].password;
-            
+            isMatch = password === user[0].password;
         } else {
-             isMatch = await bcrypt.compare(password, user[0].password);
+            isMatch = await bcrypt.compare(password, user[0].password);
         }
-        
+
         if (!isMatch) {
-            return res.render("login.ejs", { msg: "Invalid email or password" });
+            return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
 
-        const token = jwt.sign({ email: user[0].email }, SECRET_KEY, { expiresIn: "1h" });
-        res.cookie("token", token);
-
-        if (type === "admin") {
-            return res.redirect("/adminDashboard");
-        } else {
-            return res.redirect("/userProfile");
-        }
+        const token = jwt.sign({ email: user[0].email, type: user[0].type }, SECRET_KEY, { expiresIn: "1h" });
+        console.log(token);
+        res.cookie("token", token, {
+            httpOnly: true,
+            maxAge: 3600000,
+            sameSite: "lax",
+            secure:false
+        });
+        console.log("hi " + JSON.stringify(req.cookies));
+        return res.status(200).json({
+            success: true,
+            message: "Login successful",
+            email: user[0].email,
+            type: user[0].type,
+        });
 
     } catch (err) {
         console.error("Login error:", err);
-        res.render("login.ejs", { msg: "Error: " + err.message });
+        return res.status(500).json({ success: false, message: "Something went wrong!" });
     }
 };
 
-exports.userProfile = async (req, res) => {
-    res.setHeader("Cache-Control", "no-store");
-    
-    if (!req.user || !req.user.email) 
-        {
-            return res.redirect("/login");
-        }
-    try {
-        const user = await usermodel.verifyUserData(req.user.email);
-        if (user && user.length > 0) {
-            console.log("User found:", user[0]);
-            res.render("UserProfile.ejs", { user: user[0] });
-        } else {
-            console.log("User not found");
-            return res.redirect("/login");
-        }
-    } catch (err) {
-        res.render("login.ejs", { msg: "Something went wrong!" });
-    }
-};
 
-exports.adminDashboard = async (req, res) => {
-    if (!req.user || !req.user.email) return res.redirect("/login");
-
-    try {
-        const user = await usermodel.verifyUserData(req.user.email);
-        if (user && user.length > 0 && user[0].type === "admin") {
-            return res.render("AdminPage.ejs", { user: user[0] });
-        } else {
-            return res.redirect("/login");
-        }
-    } catch (err) {
-        res.render("login.ejs", { msg: "Something went wrong!" });
-    }
-};
 
 exports.logoutUser = (req, res) => {
-    res.clearCookie("token");
-    res.redirect("/");
+    res.clearCookie("token", {
+    httpOnly: true,    // cookie browser scripts पासून safe राहील
+    secure: false,     // production मध्ये true करा (HTTPS साठी)
+    sameSite: "lax",   // optional
+  });
+  
+  // user ला redirect किंवा response देऊ शकतो
+  res.status(200).json({ success: true, message: "Logged out successfully" });
 };
 
-exports.ShowUserProfile = async (req, res) => {
-    res.setHeader("Cache-Control", "no-store");
-    if (!req.user || !req.user.email) return res.redirect("/login");
 
+// controllers/userController.js
+exports.getAdminProfile = async (req, res) => {
     try {
-        const user = await usermodel.verifyUserData(req.user.email);
-        console.log("User data for profile:", user);
-        if (user && user.length > 0 ) {
-             res.render("ProfilePage.ejs", { user: user[0] });
-        } else {
-            console.log("User not found");
-            return res.redirect("/login");
+        if (!req.user) {
+            return res.status(401).json({ success: false, message: "Not authenticated" });
         }
+
+        const email = req.user.email;
+        console.log(req.user.email);
+        const user = await usermodel.verifyUserData(email);
+        if (!user || user.length === 0) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // send user info
+        console.log("User data for profile:", user[0]);
+        return res.status(200).json({
+            success: true,
+            id:user[0].id,
+            name: user[0].name,
+            email: user[0].email,
+            age: user[0].age,
+            photo: user[0].photo,
+            type: user[0].type
+        });
     } catch (err) {
-        res.render("login.ejs", { msg: "Something went wrong!" });
+        return res.status(500).json({ success: false, message: err.message });
     }
-}
+};
+
+exports.getAdminData = async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    const Admin = await usermodel.getAdminData(uid); // fetch admin by UID
+
+    if (!Admin || Admin.length === 0) {
+      return res.status(404).json({ success: false, message: "Admin Not Found" });
+    }
+
+    // Send the admin data as response
+    return res.status(200).json(Admin);
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+
+// Update admin profile
+exports.saveUpdatedAdmin = async (req, res) => {
+  try {
+    const uid = req.params.uid;       // get admin ID from URL
+    const updatedData = req.body;     // get updated data from frontend
+
+    // Call usermodel function to update admin in DB
+    const result = await usermodel.updateAdminData(uid, updatedData);
+
+    if (!result) {
+      return res.status(404).json({ success: false, message: "Admin not found or not updated" });
+    }
+
+    return res.status(200).json({ success: true, message: "Admin profile updated successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+};
