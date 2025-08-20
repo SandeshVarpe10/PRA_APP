@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import "../css/register.css"; 
+import service from "../service/service"; 
 
 function Register({ msg }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,10 +25,14 @@ function Register({ msg }) {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    // TODO: Send to backend using fetch/axios
+    const response= await service.getRegisterResult(formData);
+    if (response.data.success) {
+      navigate("/userDashboard");
+    } else {
+      console.error("Registration Failed:", response?.data?.message || "Registration failed");
+    }
   };
 
   return (
@@ -123,7 +131,7 @@ function Register({ msg }) {
           </p>
         </form>
 
-        {msg && <p className="error-msg">{msg}</p>}
+        {msg && <p className="error--msg">{msg}</p>}
       </div>
     </div>
   );

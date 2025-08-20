@@ -40,3 +40,33 @@ exports.SaveUserData=(name, email, password, age, photo, type, created_at)=>{
         })
     })
 }
+exports.getAdminData=(uid)=>{
+    return new Promise((resolve,reject)=>{
+         db.query("select * from users where id=?",[uid],(err,result)=>{
+            if(err)
+            {
+                reject(err)
+            }
+            else{
+                
+                resolve(result)
+            }
+         })
+    })
+}
+exports.updateAdminData =  (uid, data) => { 
+    const { name, email, password, age, photo, type } = data;
+    return new Promise((resolve,reject)=>{
+         db.query("UPDATE users SET name = ?, email = ?, password = ?, age = ?, photo = ?, type = ? WHERE id = ?",[name, email, password, age, photo, type, uid],(err,result)=>{
+            if(err)
+            {
+                reject(err)
+            }
+            else{
+                
+                resolve(result)
+            }
+         })
+    })
+      
+};

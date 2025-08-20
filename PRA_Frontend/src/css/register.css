@@ -79,8 +79,8 @@
 }
 
 /* Error message */
-.error-msg {
-  color: #ffb3b3;
+.error--msg {
+  color:red;
   text-align: center;
   margin-top: 15px;
 }
