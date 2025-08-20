@@ -22,7 +22,7 @@ function Home() {
   }, []);
   return (
     <>
-      <nav className="navbar navbar-expand-lg shadow-lg">
+      <nav className="navbar navbar-expand-lg shadow-lg sticky-md-top">
         <div className="container-fluid">
           <Link to={"/home"} className="logo">
             <img
@@ -71,7 +71,7 @@ function Home() {
         </div>
       </nav>
 
-      <div class="category-bar d-flex ">
+      <div class="category-bar d-flex">
         {subcategories.length > 0 ? (
           subcategories.map((cat) => (
             <button

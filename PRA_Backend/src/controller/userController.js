@@ -196,3 +196,19 @@ exports.saveUpdatedAdmin = async (req, res) => {
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
+
+exports.getAllUsers=async (req,res)=>{
+    try{
+        let promise=usermodel.getUsers();
+        promise.then((result) => {
+        if (result && result.length > 0) {
+            res.status(200).json({result});
+        } 
+    }).catch((err) => {
+        res.status(404).json(err);
+    });
+    }catch(err){
+        console.error("Error fetching users:", err);
+        return res.status(500)
+  }}
