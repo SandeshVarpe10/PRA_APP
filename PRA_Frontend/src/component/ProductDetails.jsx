@@ -21,6 +21,20 @@ const ProductDetails = () => {
       });
   }, [product_id]);
 
+  const handleDelete = (id) => {
+      if (window.confirm("Are you sure you want to delete this product?")) {
+        service
+          .deleteProduct(id)
+          .then(() => {
+            setProduct(product.filter((p) => p.product_id !== id));
+          })
+          navigate(`/products/${product.subcategory_id}`)
+          .catch((err) => {
+            console.error("Error deleting product:", err);
+          });
+      }
+    };
+
   if (loading) {
     return <p>Loading product details...</p>;
   }
@@ -96,11 +110,7 @@ const ProductDetails = () => {
           </button>
           <button
             className="btn btn-delete"
-            onClick={() => {
-              if (window.confirm("Are you sure you want to delete this product?")) {
-                navigate(`/deleteProduct/${product.product_id}`);
-              }
-            }}
+            onClick={() => handleDelete(product.product_id)}
           >
             Delete
           </button>

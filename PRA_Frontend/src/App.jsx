@@ -20,6 +20,9 @@ import ViewCatDetail from './component/viewCatDetail';
 import UpdateCategory from './component/UpdateCategory';
 import UserProfile from './component/UserProfile';
 import Cart from './component/Cart';
+import ProductList from './component/ProductList';
+import UpdateSubCategory from './component/UpdateSubCategory';
+import AddSubCategory from './component/AddSubCategory';
 
 function App() {
   return (
@@ -38,12 +41,15 @@ function App() {
           <Route path='/view-category'  element={<ViewCategories/>}></Route>
           <Route path='/products/:subcategoryId'  element={<ProductByCat/>}></Route>
           <Route path='/product/:product_id'  element={<ProductDetails/>}></Route>
-          <Route path='/view-subcategories/:Cid'  element={<ViewSubcategory/>}></Route>
+          <Route path='/view-subcategories/:categoryId'  element={<ViewSubcategory/>}></Route>
           <Route path='/get-users'  element={<ViewUsers/>}></Route>
           <Route path='/viewCategoryDetails/:id'  element={<ViewCatDetail/>}></Route>
           <Route path='/updateCategory/:id'  element={<UpdateCategory/>}></Route>
           <Route path='/user-profile'  element={<UserProfile/>}></Route>
           <Route path='/cart'  element={<Cart/>}></Route>
+          <Route path='/viewProBySubCat/:subCatId'  element={<ProductList/>}></Route>
+          <Route path='/updatesubcategory/:Cid/:Sid'  element={<UpdateSubCategory/>}></Route>
+          <Route path='/add-subcategory'  element={<AddSubCategory/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

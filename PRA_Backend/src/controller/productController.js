@@ -138,15 +138,26 @@ exports.getAllSubCat=async (req,res)=>{
 }
 
 exports.saveSubCategory = async (req, res) => {
-    const { name, categoryId } = req.body;
+  try {
+    const { subCategoryName, categoryId } = req.body;   // match frontend keys
     const image = req.file ? req.file.filename : null;
-    let promise = productmodel.addSubCategoryPage(name, image,categoryId);
-    promise.then((result) => {
-            res.render("AddSubCategory.ejs", { msg:"Subcategory added successfully!", categoryId });
-    }).catch((err) => {
-        res.render("AddSubCategory.ejs", { msg:"Error adding subcategory!", categoryId });
-    })
-}
+
+    let result = await productmodel.addSubCategory(subCategoryName, image, categoryId);
+
+    res.json({
+      success: true,
+      msg: "Subcategory added successfully!",
+      data: result,
+    });
+  } catch (err) {
+    console.error("Error adding subcategory:", err);
+    res.status(500).json({
+      success: false,
+      msg: "Error adding subcategory!",
+    });
+  }
+};
+
 
 exports.viewSubCategory = async (req, res) => {
   let categoryId = req.params.Cid;
@@ -182,97 +193,134 @@ exports.viewSubCategory = async (req, res) => {
 };
 
 
+exports.deleteSubCatByID = async (req, res) => {
+  try {
+    const subCatId = req.params.Sid;
+    const categoryId = req.params.Cid;
 
+    // Delete the subcategory
+    await productmodel.deleteSubCatByID(subCatId);
 
-exports.deleteSubCatByID =  (req, res) => {
-    let subCatId =req.params.Sid;
-    let categoryId = req.params.Cid;
-    let promise= productmodel.deleteSubCatByID(subCatId);
-    promise.then((result)=>{
-        let p= productmodel.getSubCategoriesByCategoryId(categoryId);
-        p.then((r)=>{
-            res.render("ViewSubCategory.ejs", { subcategories : r, categoryId, msg: "Sub category deleted successfully!" });
-        })
-        p.catch((err) => {
-             res.status(404).send("Sub category not found.");
-        });
-    }).catch((err) => {
-        res.status(500).send("Error fetching sub category details.");
+    // Fetch updated list after deletion
+    const subcategories = await productmodel.getSubCategoriesByCategoryId(categoryId);
+
+    res.json({
+      success: true,
+      msg: "Subcategory deleted successfully!",
+      subcategories, // send updated list
+      categoryId,
     });
-    
-}
+  } catch (err) {
+    console.error("Error deleting subcategory:", err);
+    res.status(500).json({
+      success: false,
+      msg: "Error deleting subcategory!",
+    });
+  }
+};
+
 
 exports.updateSubCategoryPage = async (req, res) => {
-    let category_Id = req.params.Cid;
-    let promise = productmodel.getSubCategoryById(req.params.Sid);
+  let category_Id = req.params.Cid;
 
-    promise.then((result) => {
-        if (result && result.length > 0) {
-            res.render("UpdateSubCategory.ejs", { subcategory: result[0], msg: null, category_Id }); // pass first object
-        } else {
-            res.status(404).send("Sub category not found.");
-        }
-    }).catch((err) => {
-        res.status(404).send("Sub category not found.");
-    });
-}
+  try {
+    let result = await productmodel.getSubCategoryById(req.params.Sid);
+
+    if (result && result.length > 0) {
+      res.status(200).json({
+        subcategory: result[0],
+        category_Id: category_Id
+      });
+    } else {
+      res.status(404).json({ message: "Sub category not found." });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error fetching subcategory." });
+  }
+};
 
 
 exports.updateSubCategorySave = async (req, res) => {
-    const subcategoryId = req.params.Sid;
-    const category_Id = req.params.Cid;
-    const { subcategory_name } = req.body;
-    const image = req.file ? req.file.filename : null;
-    console.log("Updating subcategory with ID:", subcategoryId);
-    console.log("New subcategory name:", subcategory_name);
-    try {
-        let categoryData = await productmodel.getCategoryById(category_Id);
-        let categoryName = categoryData[0]?.category_name || "Unknown Category";
-        const result = await productmodel.updatesavesubcategory(subcategoryId, subcategory_name, image);
+  const subcategoryId = req.params.Sid;
+  const oldCategoryId = req.params.Cid; // from URL params
+  const { subcategory_name, categoryId: newCategoryId } = req.body; // from form body
 
-        if (result && result.affectedRows > 0) {
-            const updatedSubcategory = await productmodel.getSubCategoryById(subcategoryId);
-            const categoryId = updatedSubcategory[0].category_id;
-
-            const subcategories = await productmodel.getSubCategoriesByCategoryId(categoryId);
-            res.render("ViewSubCategory.ejs", {
-                subcategories,
-                categoryId,
-                categoryName,
-                msg: "Subcategory updated successfully!"
-            });
-        } else {
-            const subcategory = await productmodel.getSubCategoryById(subcategoryId);
-            res.render("UpdateSubCategory.ejs", {
-                subcategory: subcategory[0],
-                msg: "Error updating subcategory!"
-            });
-        }
-    } catch (err) {
-        console.error("Error updating subcategory:", err);
-        const subcategory = await productmodel.getSubCategoryById(subcategoryId);
-        res.render("UpdateSubCategory.ejs", {
-            subcategory: subcategory[0] || {},
-            msg: "Error updating subcategory!"
-        });
+  try {
+    // Fetch current subcategory first
+    const currentSubcategory = await productmodel.getSubCategoryById(subcategoryId);
+    if (!currentSubcategory || !currentSubcategory[0]) {
+      return res.status(404).json({ success: false, msg: "Subcategory not found!" });
     }
+
+    // Use old image if no new image is uploaded
+    const image = req.file ? req.file.filename : currentSubcategory[0].image;
+
+    // Determine which category_id to use (new if provided, else old one)
+    const finalCategoryId = newCategoryId || oldCategoryId;
+
+    // Update subcategory
+    const result = await productmodel.updatesavesubcategory(
+      subcategoryId,
+      subcategory_name,
+      image,
+      finalCategoryId
+    );
+
+    if (result && result.affectedRows > 0) {
+      const updatedSubcategory = await productmodel.getSubCategoryById(subcategoryId);
+      res.json({
+        success: true,
+        msg: "Subcategory updated successfully!",
+        subcategory: updatedSubcategory[0],
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        msg: "Error updating subcategory! Maybe no changes were made.",
+      });
+    }
+  } catch (err) {
+    console.error("Error updating subcategory:", err);
+    res.status(500).json({
+      success: false,
+      msg: "Error updating subcategory!",
+    });
+  }
 };
 
+
+
+
 exports.viewSubCategoryDetails = async (req, res) => {
-    let subcategory_id = req.params.Sid;
-    let category_id=req.params.Cid;
-    try {
-        let subcategory = await productmodel.getSubCategoryById (subcategory_id);
-        if (subcategory && subcategory.length > 0) {
-            res.render("ViewSubCategoryDetails.ejs", { subcategories: subcategory[0],category_id});
-        } else {
-            res.status(404).send("Category not found.");
-        }
-    } catch (err) {
-        console.error("Error fetching category details:", err);
-        res.status(500).send("Error fetching category details.");
+  let subcategory_id = req.params.sid;
+  let category_id = req.params.cid;
+
+  try {
+    let subcategory = await productmodel.getSubCategoryById(subcategory_id);
+
+    if (subcategory && subcategory.length > 0) {
+      res.json({
+        success: true,
+        data: subcategory[0],
+        category_id: category_id
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Subcategory not found"
+      });
     }
-}
+  } catch (err) {
+    console.error("Error fetching subcategory details:", err);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching subcategory details"
+    });
+  }
+};
+
+
 exports.addProductPage = (req, res) => {
     let promise = productmodel.getAllSubCategories();
     promise.then((subcategories) => {
@@ -386,21 +434,34 @@ exports.showProductDetails = async (req, res) => {
   }
 };
 
-
 exports.getProBySubCat = async (req, res) => {
-    const subCatId = req.params.Sid;
-    try {
-        const products = await productmodel.getProductsBySubcategoryId(subCatId);
-        if (products) {
-            res.render('SubcategoryProducts.ejs', { products : products });
-        } else {
-            res.status(404).send("Product not found.");
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Error fetching product details.");
+  const subCatId = req.params.Sid;
+
+  try {
+    const products = await productmodel.getProductsBySubcategoryId(subCatId);
+
+    if (products && products.length > 0) {
+      res.status(200).json({
+        success: true,
+        products: products,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "No products found for this subcategory.",
+      });
     }
+  } catch (err) {
+    console.error("Error fetching products:", err);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching product details.",
+      error: err.message,
+    });
+  }
 };
+
+
 exports.updateProductPage = async (req, res) => {
   const productId = req.params.product_id;
 

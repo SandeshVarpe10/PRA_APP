@@ -26,6 +26,20 @@ exports.getUsers=()=>{
         })
     })
 }
+exports.deleteUserById=(uid)=>{
+    return new Promise((resolve,reject)=>{
+        db.query("delete from users where id=?",[uid],(err,result)=>{
+            if(err)
+            {
+                reject(err)
+            }else{
+                resolve(result);
+            }
+        })
+    })
+}
+
+
 
 exports.SaveUserData=(name, email, password, age, photo, type, created_at)=>{
     return new Promise((resolve,reject)=>{

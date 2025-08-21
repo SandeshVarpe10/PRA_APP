@@ -24,7 +24,7 @@ function Home() {
     <>
       <nav className="navbar navbar-expand-lg shadow-lg sticky-md-top">
         <div className="container-fluid">
-          <Link to={"/home"} className="logo">
+          <Link to={"/"} className="logo">
             <img
               src="https://img.freepik.com/premium-photo/modern-logo-stylish-shopping-cart-icon_1108533-68784.jpg?semt=ais_hybrid&w=740"
               alt="Logo"
@@ -63,7 +63,7 @@ function Home() {
                   <button class="btn login-btn">Login</button>
                 </Link>
                 <Link to={"/cart"} className="cart-btn">
-                  <button class="btn cart-btn">Cart🛒</button>
+                  <button class="btn login-btn">Cart🛒</button>
                 </Link>
               </div>
             </div>

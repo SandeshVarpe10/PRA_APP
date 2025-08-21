@@ -32,23 +32,22 @@
   background: linear-gradient(90deg, #ff4d6d);
   color: #fff;
   border: none;
-  padding: 10px 30px;
+  padding: 10px 20px;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 50px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s;
-  margin-bottom: 25px;
 }
 
 .myprofile-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(255,77,109,0.5), 0 5px 15px rgba(59,89,152,0.5);
+  box-shadow: 0 5px 15px rgba(255,77,109,0.5), 0 5px 5px rgba(59,89,152,0.5);
 }
 
 /* ===== Sidebar ===== */
 .sidebar {
-  width: 250px;
+  width: 350px;
   background: #0b1b33; /* dark blue sidebar */
   min-height: calc(100vh - 56px);
   padding-top: 30px;
@@ -57,7 +56,8 @@
 .sidebar h5 {
   color: #ff4d6d;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  margin-top: 1rem;
 }
 
 .sidebar-item {
@@ -72,8 +72,18 @@
   border-radius: 8px;
   transition: 0.3s;
 }
+
+.dropdown-item:hover{
+  color: white;
+  background-color: rgb(127, 127, 127);
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
 .dropdown-item{
   color: white;
+  border-radius: 5px;
+  padding: 5px 15px;
 }
 .sidebar-link:hover {
   background: linear-gradient(90deg, #ff4d6d, #3b5998);
@@ -100,7 +110,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 350px;
+  width: 400px;
   height: 100%;
   background: linear-gradient(180deg, #0b1b33, #13264d);
   z-index: 100;
@@ -139,23 +149,15 @@
 .profile-actions {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 15px;
   margin-top: 20px;
 }
 
-.btn-edit {
-  background: linear-gradient(90deg, #db0d32, #3b5998);
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
 .btn-edit:hover {
   transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(255,77,109,0.5), 0 5px 15px rgba(59,89,152,0.5);
+  box-shadow: 0 5px 15px rgba(105, 89, 255, 0.5), 0 2px 5px rgba(59,89,152,0.5);
+  color: white;
 }
 
 /* Close Button */

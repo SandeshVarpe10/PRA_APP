@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import "../css/register.css"; 
-import service from "../service/service"; 
+import "../css/register.css";
+import service from "../service/service";
 
 function Register({ msg }) {
   const navigate = useNavigate();
@@ -25,13 +25,32 @@ function Register({ msg }) {
   };
 
   // Handle form submission
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response= await service.getRegisterResult(formData);
-    if (response.data.success) {
-      navigate("/userDashboard");
-    } else {
-      console.error("Registration Failed:", response?.data?.message || "Registration failed");
+
+    // build FormData for file upload
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("password", formData.password);
+    formDataToSend.append("age", formData.age);
+    formDataToSend.append("created_at", formData.created_at);
+    if (formData.photo) {
+      formDataToSend.append("photo", formData.photo); // must match .single("photo")
+    }
+
+    try {
+      const response = await service.getRegisterResult(formDataToSend);
+      if (response.data.success) {
+        navigate("/userDashboard");
+      } else {
+        console.error(
+          "Registration Failed:",
+          response?.data?.message || "Registration failed"
+        );
+      }
+    } catch (err) {
+      console.error("Error:", err);
     }
   };
 

@@ -125,7 +125,7 @@ exports.updateSaveCategory = (id, name, description) => {
   });
 };
 
-exports.addSubCategoryPage = (name, categoryid, image) => {
+exports.addSubCategory = (name, categoryid, image) => {
   return new Promise((resolve, reject) => {
     db.query(
       "INSERT INTO subcategory VALUES ('0',?, ?, ?)",
@@ -323,11 +323,11 @@ exports.getSubCategoryById = (id) => {
   });
 };
 
-exports.updatesavesubcategory = (subcategoryId, subcategory_name, image) => {
+exports.updatesavesubcategory = (subcategoryId, subcategory_name, image, category_id) => {
   return new Promise((resolve, reject) => {
     db.query(
-      "UPDATE subcategory SET subcategory_name = ?, image = ? WHERE subcategory_id = ?",
-      [subcategory_name, image, subcategoryId],
+      "UPDATE subcategory SET subcategory_name = ?, image = ?, category_id = ? WHERE subcategory_id = ?",
+      [subcategory_name, image, category_id, subcategoryId],
       (err, result) => {
         if (err) {
           reject(err);
@@ -338,3 +338,4 @@ exports.updatesavesubcategory = (subcategoryId, subcategory_name, image) => {
     );
   });
 };
+
