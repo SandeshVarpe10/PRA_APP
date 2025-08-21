@@ -46,8 +46,8 @@
 
 /* On focus */
 .form-container .form-control.formData:focus {
-  border: 1px solid #ff30e7 !important;
-  box-shadow: 0 0 0 0.15rem rgba(255, 0, 191, 0.25) !important;
+  border: 1px solid #9f1c4c !important;
+  box-shadow: 0 0 0 0.15rem rgba(134, 2, 64, 0.25) !important;
   outline: none;
 }
 
@@ -77,12 +77,12 @@ input[type="file"].formData {
   font-weight: 500;
   border-radius: 8px;
   transition: background-color 0.2s ease-in-out;
-  background-color: #e96fff;
+  background: linear-gradient(135deg, #3b5998 0%, #ff4d6d 100%);
   border: none;
 }
 
 .btn-success:hover {
-  background-color: #df27ff;
+    background: linear-gradient(135deg, #ff4d6d 0%, #3b5998 100%);
 }
 
 /* Alert styling */

@@ -31,6 +31,7 @@ router.get("/Adminlogout", userCtrl.logoutUser);
 
 //user
 router.get("/get-users",userCtrl.getAllUsers);
+router.get("/delete-user/:uid",userCtrl.deleteUser);
 
 //category routes
 
@@ -51,9 +52,9 @@ router.post("/subcategorysave",upload.single("image"), productCtrl.saveSubCatego
 router.get("/view-subcategories/:Cid", productCtrl.viewSubCategory);
 router.get("/viewProBySubCat/:Sid",productCtrl.getProBySubCat);
 router.get("/deleteSubCat/:Cid/:Sid",productCtrl.deleteSubCatByID);
-router.get("/updatesubcategory/:Cid/:Sid", productCtrl.updateSubCategoryPage);
+router.post("/updatesubcategory/:Cid/:Sid",upload.single("image"),productCtrl.updateSubCategorySave);
 router.post("/subcategoryupdatesave/:Cid/:Sid", upload.single("image"), productCtrl.updateSubCategorySave);
-router.get("/subcategorydetails/:Cid/:Sid", productCtrl.viewSubCategoryDetails);
+// router.get("/subcategorydetails/:cid/:sid", productCtrl.viewSubCategoryDetails);
 
 
 //product routes

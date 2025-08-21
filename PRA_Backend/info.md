@@ -9,6 +9,4 @@ git pull origin main
 git merge mahesh_branch 
 git push origin main
 
-
-
 git pull origin main --allow-unrelated-histories

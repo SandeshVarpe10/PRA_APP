@@ -34,23 +34,23 @@
   background: linear-gradient(90deg, #ff4d6d, #e91e63);
   color: #fff;
   border: none;
-  padding: 10px 26px;
-  font-size: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
   font-weight: 600;
-  border-radius: 30px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
 }
 
 .myprofile-btn:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 18px rgba(255,77,109,0.4);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255,77,109,0.5), 0 5px 5px rgba(59,89,152,0.5);
 }
 
 /* ===== Sidebar ===== */
 .sidebar {
-  width: 240px;
-  background: #0d1f3d;
+  width: 350px;
+  background: #0b1b33; /* dark blue sidebar */
   min-height: calc(100vh - 56px);
   padding-top: 30px;
   border-right: 1px solid rgba(255,255,255,0.08);
@@ -59,9 +59,8 @@
 .sidebar h5 {
   color: #ff4d6d;
   text-align: center;
-  margin-bottom: 1.8rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  margin-bottom: 3rem;
+  margin-top: 1rem;
 }
 
 .sidebar-item {
@@ -77,6 +76,18 @@
   transition: background 0.3s ease, color 0.3s ease;
 }
 
+.dropdown-item:hover{
+  color: white;
+  background-color: rgb(127, 127, 127);
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
+.dropdown-item{
+  color: white;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
 .sidebar-link:hover {
   background: linear-gradient(90deg, #ff4d6d, #3b5998);
   color: #fff;
@@ -105,7 +116,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 360px;
+  width: 400px;
   height: 100%;
   background: linear-gradient(180deg, #0b1b33, #15294f);
   z-index: 100;
@@ -148,25 +159,15 @@
 .profile-actions {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-top: 22px;
-}
-
-.btn-edit {
-  background: linear-gradient(90deg, #db0d32, #3b5998);
-  color: #fff;
-  border: none;
-  padding: 9px 20px;
-  border-radius: 25px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .btn-edit:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 5px 15px rgba(255,77,109,0.5);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(105, 89, 255, 0.5), 0 2px 5px rgba(59,89,152,0.5);
+  color: white;
 }
 
 /* Close Button */

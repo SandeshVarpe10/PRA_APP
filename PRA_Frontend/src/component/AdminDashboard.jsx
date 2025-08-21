@@ -174,7 +174,7 @@ function AdminDashboard() {
     {/* ✅ New Buttons Added Here */}
    <div className="profile-actions">
   {/* Edit Profile */}
-  <Link to={`/edit-profile/${user.id}`} className="btn-edit">✏️ Edit Profile</Link>
+  <Link to={`/edit-profile/${user.id}`} className="btn btn-primary">✏️ Edit Profile</Link>
 
   {/* Logout */}
   <button onClick={handleLogout} className="btn btn-danger">

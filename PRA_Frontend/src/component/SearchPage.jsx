@@ -25,7 +25,7 @@ function SearchPage() {
   }, []);
 
   // ✅ Card UI function
-  const renderProductCard = (product, index) => {
+  const renderProductCard = (product) => {
     const originalPrice = parseFloat(product.price);
     const discountPercent = parseFloat(product.discount);
     const saved = (originalPrice * discountPercent) / 100;

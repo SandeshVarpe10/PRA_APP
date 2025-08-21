@@ -11,5 +11,6 @@
   body{
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #f9e5ff, #f9e5ff);
+          background: linear-gradient(135deg, #b3c3e6 0%, #fbb1bf 100%);
+
     }
