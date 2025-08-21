@@ -4,7 +4,7 @@ const API_URL = "http://localhost:3000/cart"; // cart base URL
 
 class CartService {
   // ✅ Add product to cart
-  addToCarts(userId, productId, quantity) {
+  addToCart(userId, productId, quantity) {
     return axios.post(`${API_URL}/add`, {
       userId,
       productId,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import service from "../service/service";
+import cartService from "../service/cartService";
 import Cookies from "js-cookie";
 
 import Navbar from "./Navbar";

@@ -25,6 +25,7 @@ import UpdateSubCategory from './component/UpdateSubCategory';
 import AddSubCategory from './component/AddSubCategory';
 import ProtectedRoute from './component/ProtectedRoute';
 import SearchPage from './component/SearchPage';
+import UpdateProduct from './component/UpdateProduct';
 
 function App() {
   return (
@@ -35,17 +36,18 @@ function App() {
           <Route path='/' element={<Home/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/adminDashboard' element={ <ProtectedRoute allowedTypes={["admin"]}><AdminDashboard /></ProtectedRoute>}/>
-          <Route path='/userDashboard' element={<UserDashboard/>}></Route>
+          <Route path='/userDashboard' element={ <ProtectedRoute allowedTypes={["user"]}><UserDashboard /></ProtectedRoute>}></Route>
           <Route path='/edit-profile/:uid' element={<EditAdminProfile/>}></Route>
-           <Route path='/add-product' element={ <ProtectedRoute allowedTypes={["admin"]}><AddProduct /></ProtectedRoute>}/>
+          <Route path='/add-product' element={ <ProtectedRoute allowedTypes={["admin"]}><AddProduct /></ProtectedRoute>}/>
           <Route path='/register' element={<Register/>}></Route>
           <Route path='/add-category' element={<ProtectedRoute allowedTypes={["admin"]}><AddCategory/></ProtectedRoute>}></Route>
           <Route path='/view-product'  element={<ProtectedRoute allowedTypes={["admin"]}><ViewProducts/></ProtectedRoute>}></Route>
           <Route path='/view-category'  element={<ProtectedRoute allowedTypes={["admin"]}><ViewCategories/></ProtectedRoute>}></Route>
           <Route path='/products/:subcategoryId'  element={<ProductByCat/>}></Route>
           <Route path='/product/:product_id'  element={<ProductDetails/>}></Route>
+          <Route path='/upd-product/:id'  element={<UpdateProduct/>}></Route>
           <Route path='/view-subcategories/:categoryId'  element={<ViewSubcategory/>}></Route>
-          <Route path='/get-users'  element={<ViewUsers/>}></Route>
+          {/* <Route path='/get-users'  element={<ViewUsers/>}></Route> */}
           <Route path='/viewCategoryDetails/:id'  element={<ViewCatDetail/>}></Route>
           <Route path='/updateCategory/:id'  element={<UpdateCategory/>}></Route>
           <Route path='/product/:product_id'  element={<ProtectedRoute allowedTypes={["admin"]}><ProductDetails/></ProtectedRoute>}></Route>
@@ -58,7 +60,7 @@ function App() {
           <Route path='/viewProBySubCat/:subCatId'  element={<ProductList/>}></Route>
           <Route path='/updatesubcategory/:Cid/:Sid'  element={<UpdateSubCategory/>}></Route>
           <Route path='/add-subcategory'  element={<AddSubCategory/>}></Route>
-          <Route path='/cart'  element={<ProtectedRoute allowedTypes={["admin"]}><Cart/></ProtectedRoute>}></Route>
+          <Route path='/cart'  element={<ProtectedRoute allowedTypes={["user"]}><Cart/></ProtectedRoute>}></Route>
           <Route path='/search-live' element={<SearchPage/>}></Route>
         </Routes>
       </BrowserRouter>

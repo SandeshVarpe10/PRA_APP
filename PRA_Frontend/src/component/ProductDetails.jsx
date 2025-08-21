@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate,Link } from "react-router-dom";
 import "../css/productDetails.css";
 import Cookies from "js-cookie";
 import service from "../service/service";
@@ -36,7 +36,7 @@ const ProductDetails = () => {
       return;
     }
 
-    CartService.addToCarts(userId, product.product_id, 1)
+    CartService.addToCart(userId, product.product_id, 1)
       .then(() => {
         alert(`${product.product_name} added to cart!`);
       })
@@ -45,6 +45,21 @@ const ProductDetails = () => {
         alert("Something went wrong while adding to cart.");
       });
   };
+
+
+  const handleDelete = (id) => {
+          if (window.confirm("Are you sure you want to delete this product?")) {
+            service
+              .deleteProduct(id)
+              .then(() => {
+                setProduct(product.filter((p) => p.product_id !== id));
+              })
+              .catch((err) => {
+                console.error("Error deleting product:", err);
+              });
+          }
+  };
+
 
   if (loading) return <p>Loading product details...</p>;
   if (!product) return <p>Product not found.</p>;
@@ -110,8 +125,20 @@ const ProductDetails = () => {
           {/* Conditional Buttons */}
           {userType === "admin" ? (
             <div className="d-flex gap-2">
-              <button className="btn btn-warning">✏️ Update</button>
-              <button className="btn btn-danger">🗑️ Delete</button>
+              <Link
+                  to={`/upd-product/${product.product_id}`}
+                  className="subcat-btn update"
+                >
+                  ✏️ Update
+                </Link>
+                    <button
+                      className="btn-delete"
+                      onClick={() => {handleDelete(product.product_id)
+                          navigate(`/products/${product.subcategory_id}`)
+                      }}
+                    >
+                      🗑 Delete
+                    </button>
             </div>
           ) : (
             <button className="btn btn-primary" onClick={() => addToCart(product)}>

@@ -5,12 +5,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 export default function ViewUsers() {
   const [users, setUsers] = useState([]);
   const [msg, setMsg] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     service
       .getAllUsers()
       .then((res) => {
-        setUsers(res.data.result); 
+        setUsers(res.data.result);
       })
       .catch((err) => {
         console.error("Error fetching users:", err);
@@ -18,15 +19,25 @@ export default function ViewUsers() {
   }, []);
 
   const handleDelete = (id) => {
-      if (window.confirm("Are you sure you want to delete this user?")) {
-        service.deleteUser(id)
-          .then((res) => {
-            setMsg(res.data.msg || "User deleted successfully!");
-            setUsers((prev) => prev.filter((user) => user.id !== id));
-          })
-          .catch(() => setMsg("Error deleting user!"));
-      }
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      service
+        .deleteUser(id)
+        .then((res) => {
+          setMsg(res.data.msg || "User deleted successfully!");
+          setUsers((prev) => prev.filter((user) => user.id !== id));
+        })
+        .catch(() => setMsg("Error deleting user!"));
+    }
   };
+
+  const filteredUsers = users.filter((user) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      user.name?.toLowerCase().includes(term) ||
+      user.email?.toLowerCase().includes(term) ||
+      user.type?.toLowerCase().includes(term)
+    );
+  });
 
   return (
     <div className="container-fluid my-5 px-5">
@@ -36,6 +47,17 @@ export default function ViewUsers() {
           Users List
         </h2>
         <div className="card-body">
+
+          <div className="d-flex justify-content-end mb-3">
+            <input
+              type="text"
+              className="form-control w-25"
+              placeholder="🔍 Search by name, email, or role..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
           <div className="table-responsive">
             <table className="table table-striped table-hover align-middle text-center">
               <thead className="table-dark">
@@ -51,8 +73,8 @@ export default function ViewUsers() {
                 </tr>
               </thead>
               <tbody>
-                {users.length > 0 ? (
-                  users.map((user, index) => (
+                {filteredUsers.length > 0 ? (
+                  filteredUsers.map((user, index) => (
                     <tr key={index}>
                       <td className="fw-semibold">{user.id}</td>
                       <td>{user.name}</td>
@@ -62,7 +84,7 @@ export default function ViewUsers() {
                       <td>
                         {user.photo ? (
                           <img
-                            src={`http://localhost:3000/images/${user.photo}`} 
+                            src={`http://localhost:3000/images/${user.photo}`}
                             alt={user.name}
                             className="rounded-circle"
                             width="50"
@@ -75,20 +97,25 @@ export default function ViewUsers() {
                       <td>
                         <span
                           className={`badge px-3 py-2 ${
-                            user.type === "admin"
-                              ? "bg-warning"
-                              : "bg-success"
+                            user.type === "admin" ? "bg-warning" : "bg-success"
                           }`}
                         >
                           {user.type}
                         </span>
                       </td>
-                      <td><button className="btn-sm border-0 btn-danger" onClick={()=>handleDelete(user.id)}>delete</button></td>
+                      <td>
+                        <button
+                          className="btn-sm border-0 btn-danger"
+                          onClick={() => handleDelete(user.id)}
+                        >
+                          delete
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="7" className="text-muted py-4">
+                    <td colSpan="8" className="text-muted py-4">
                       🚫 No users found
                     </td>
                   </tr>

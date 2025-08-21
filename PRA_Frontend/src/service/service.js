@@ -50,6 +50,9 @@ class Service {
   deleteProduct(product_id) {
     return axios.get(`http://localhost:3000/deleteProduct/${product_id}`);
   }
+  updateProduct(product_id,data){
+    return axios.post(`http://localhost:3000/productupdatesave/${product_id}`,data);
+  }
   getProductById(product_id) {
     return axios.get(`http://localhost:3000/product/${product_id}`);
   }
