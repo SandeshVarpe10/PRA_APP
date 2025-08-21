@@ -67,6 +67,7 @@ router.get('/search-live', productCtrl.liveSearch);
 router.get("/updateProduct/:product_id", productCtrl.updateProductPage);
 router.post("/productupdatesave/:product_id", upload.single("image"), productCtrl.updateProductSave);
 router.get("/deleteProduct/:product_id", productCtrl.deleteProduct);
+router.get("/searchProduct/:query",productCtrl.searchLiveProduct);
 
 
 //cart routes

@@ -314,7 +314,7 @@ exports.getSubCategoryById = (id) => {
     const sql = "SELECT * FROM subcategory WHERE subcategory_id = ?";
     db.query(sql, [id], (err, result) => {
       if (err) {
-        console.error("Error fetching subcategory:", err);
+
         reject(err);
       } else {
         resolve(result);
@@ -339,3 +339,19 @@ exports.updatesavesubcategory = (subcategoryId, subcategory_name, image, categor
   });
 };
 
+exports.searchLiveProducts = (query) => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT * FROM products WHERE product_name LIKE ? OR description LIKE ?",
+      [`%${query}%`, `%${query}%`],
+      (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          console.log("Search result:", result);
+          resolve(result);
+        }
+      }
+    );
+  })
+}

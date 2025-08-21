@@ -54,7 +54,7 @@ function App() {
           <Route path='/viewCategoryDetails/:id'  element={<ProtectedRoute allowedTypes={["admin"]}><ViewCatDetail/></ProtectedRoute>}></Route>
           <Route path='/updateCategory/:id'  element={<ProtectedRoute allowedTypes={["admin"]}><UpdateCategory/></ProtectedRoute>}></Route>
           <Route path='/user-profile'  element={<UserProfile/>}></Route>
-          <Route path='/cart'  element={<Cart/>}></Route>
+          
           <Route path='/viewProBySubCat/:subCatId'  element={<ProductList/>}></Route>
           <Route path='/updatesubcategory/:Cid/:Sid'  element={<UpdateSubCategory/>}></Route>
           <Route path='/add-subcategory'  element={<AddSubCategory/>}></Route>

@@ -1,16 +1,19 @@
 import React from "react";
+import ProductCard from "./ProductCard";
+import "../css/productCard.css";
 
-function HistoryProducts({ historyProducts, renderProductCard }) {
+export default function HistoryProducts({ historyProducts }) {
+  if (!historyProducts || historyProducts.length === 0)
+    return <div>No recently viewed products</div>;
+
   return (
-    <section>
-      <h3>Your History</h3>
-      <div className="product-grid">
-        {historyProducts.length > 0
-          ? historyProducts.map((p, i) => renderProductCard(p, i))
-          : <p>No history found.</p>}
+    <div className="history-products">
+      <h2>Recently Viewed</h2>
+      <div className="horizontal-scroll">
+        {historyProducts.map((product) => (
+          <ProductCard key={product.product_id} product={product} />
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
-
-export default HistoryProducts;

@@ -4,10 +4,20 @@ import Cookies from "js-cookie";
 
 function Navbar({ categories }) {
   const token = Cookies.get("token");
-  const userType = Cookies.get("type"); 
+  const userType = Cookies.get("type");
   const navigate = useNavigate();
 
-  // ✅ Search box वर click झाल्यावर redirect 
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      const query = e.target.value.trim();
+      if (query.length > 0) {
+        navigate(`/search-live?query=${encodeURIComponent(query)}`);
+      } else {
+        navigate("/search-live");
+      }
+    }
+  };
+
   const handleSearchClick = () => {
     navigate("/search-live");
   };
@@ -27,7 +37,6 @@ function Navbar({ categories }) {
 
         <div className="collapse navbar-collapse" id="navbarContent">
           <div className="navbar-center mt-2 mt-lg-0">
-            {/* ❌ Form काढून टाकलं */}
             <div className="d-flex navbar-center h">
               <select className="category-select me-2" name="category">
                 <option value="">All Categories</option>
@@ -44,7 +53,8 @@ function Navbar({ categories }) {
                 id="searchInput"
                 placeholder="Search products..."
                 aria-label="Search"
-                onClick={handleSearchClick} // ✅ क्लिक करताच page बदलणार
+                onKeyDown={handleSearch}
+                onFocus={handleSearchClick}
               />
             </div>
 
@@ -53,10 +63,16 @@ function Navbar({ categories }) {
                 <button className="btn cart-btn">Cart 🛒</button>
               </Link>
 
-              {token && userType === "user" ? (
-                <Link to={"/myprofile"}>
-                  <button className="btn login-btn">My Profile</button>
-                </Link>
+              {token ? (
+                userType === "user" ? (
+                  <Link to={"/myprofile"}>
+                    <button className="btn login-btn">My Profile</button>
+                  </Link>
+                ) : (
+                  <Link to={"/adminDashboard"}>
+                    <button className="btn login-btn">Dashboard</button>
+                  </Link>
+                )
               ) : (
                 <Link to={"/login"}>
                   <button className="btn login-btn">Login</button>

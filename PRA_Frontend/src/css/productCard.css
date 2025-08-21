@@ -1,0 +1,61 @@
+.horizontal-card {
+  display: flex;
+  flex-direction: column; /* keep each card's content stacked */
+  align-items: center;
+  min-width: 220px; /* card width */
+  margin-right: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  position: relative;
+  background-color: #fff;
+}
+
+.horizontal-card .product-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.horizontal-card .product-info {
+  text-align: center;
+}
+
+.horizontal-card .add-to-cart-btn {
+  margin-top: 10px;
+  padding: 5px 10px;
+}
+
+.horizontal-card .discount-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 50px;
+}
+
+/* Horizontal scroll container */
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}

@@ -147,6 +147,12 @@ exports.logoutUser = (req, res) => {
     sameSite: "lax",
   });
 
+  res.clearCookie("userid", {
+    httpOnly: false,  // ha tu UI madhe access kartos mhanun httpOnly=false rahil
+    secure: false,
+    sameSite: "lax",
+  });
+
 
   return res.status(200).json({
     success: true,
@@ -255,3 +261,24 @@ exports.getAllUsers=async (req,res)=>{
         console.error("Error fetching users:", err);
         return res.status(500)
     }}
+
+exports.deleteUser = async (req, res) => {
+  try {
+    let userId = req.params.uid;
+    await usermodel.deleteUserById(userId);
+
+    let promise = usermodel.getUsers();
+    promise
+      .then((result) => {
+        if (result && result.length > 0) {
+          res.status(200).json({ result });
+        }
+      })
+      .catch((err) => {
+        res.status(404).json(err);
+      });
+  } catch (err) {
+    console.error("Error deleting users:", err);
+    return res.status(500);
+  }
+};

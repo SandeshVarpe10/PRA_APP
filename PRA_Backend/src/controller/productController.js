@@ -542,3 +542,32 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).send("Error deleting product.");
   }
 };
+
+exports.searchLiveProduct = async (req, res) => {
+  const query = req.params.query;   // frontend कडून ?query=milk
+  
+
+  try {
+    const products = await productmodel.searchLiveProducts(query);
+
+    if (products && products.length > 0) {
+      res.json({
+        success: true,
+        pro: products
+      });
+    } else {
+      res.json({
+        success: true,
+        data: [],
+        message: "No products found"
+      });
+    }
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Error searching products."
+    });
+  }
+};

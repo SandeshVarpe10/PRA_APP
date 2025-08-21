@@ -4,7 +4,6 @@ let db=require("../../db.js")
 // 1️⃣ User history
 exports.getUserHistory = async (req, res) => {
   const userId = req.params.userId;
-  console.log("UserId:", userId);
 
   try {
     const history = await new Promise((resolve, reject) => {
@@ -42,16 +41,13 @@ exports.getUserHistory = async (req, res) => {
 
       db.query(sql, [userId], (err, result) => {
         if (err) return reject(err);
-        console.log("DB Result:", result);
         resolve(result);
       });
     });
 
     // 🔑 structured response
-    console.log("history",history)
     res.status(200).json({ products: history });
   } catch (err) {
-    console.error("History fetch error:", err);
     res.status(500).json({ message: "Error fetching history", error: err });
   }
 };
