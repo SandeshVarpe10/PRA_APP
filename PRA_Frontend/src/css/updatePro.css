@@ -1,0 +1,114 @@
+/* updatePro.css */
+
+.form-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #333;
+  position: relative;
+}
+
+.form-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #4caf50;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #fd3f6cee;
+  box-shadow: 0 0 6px rgba(76, 175, 80, 0.3);
+}
+
+textarea.form-control {
+  resize: none;
+}
+
+.product-image-preview {
+  max-width: 120px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-image-preview:hover {
+  transform: scale(1.05);
+}
+
+.section-divider {
+  height: 2px;
+  background: #f0f0f0;
+  margin: 20px 0;
+  border-radius: 1px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-custom {
+  background: #e6052396;
+  color: #fff;
+  width: 100%;
+}
+
+.btn-custom:hover {
+  background: #9f060ebc;
+  transform: translateY(-2px);
+  color: white;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

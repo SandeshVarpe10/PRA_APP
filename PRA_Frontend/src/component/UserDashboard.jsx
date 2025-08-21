@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import service from "../service/service";
+import cartService from "../service/cartService";
 import Cookies from "js-cookie";
 import "../css/productByCat.css";
 
@@ -58,7 +59,7 @@ function UserDashboard() {
     }
 
     try {
-      await service.addToCart(userId, productId, 1);
+      await cartService.addToCart(userId, productId, 1);
       alert("✅ Product added to cart!");
     } catch (err) {
       console.error("Error adding to cart:", err);

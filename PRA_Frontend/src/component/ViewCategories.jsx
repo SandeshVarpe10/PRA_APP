@@ -6,6 +6,7 @@ import Service from "../service/service";
 export default function ViewCategories() {
   const [categories, setCategories] = useState([]);
   const [msg, setMsg] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch all categories
   const fetchCategories = () => {
@@ -32,6 +33,11 @@ export default function ViewCategories() {
     }
   };
 
+  // ✅ Filter categories based on search term
+  const filteredCategories = categories.filter((cat) =>
+    cat.category_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="view-container">
       <div className="table-wrapper shadow-lg">
@@ -45,6 +51,8 @@ export default function ViewCategories() {
             type="text"
             placeholder="🔍 Search Category Name..."
             className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // ✅ update state
           />
         </div>
 
@@ -58,8 +66,8 @@ export default function ViewCategories() {
             </tr>
           </thead>
           <tbody>
-            {categories.length > 0 ? (
-              categories.map((cat, index) => (
+            {filteredCategories.length > 0 ? (
+              filteredCategories.map((cat, index) => (
                 <tr key={cat.id}>
                   <td>{index + 1}</td>
                   <td className="category-name">{cat.category_name}</td>

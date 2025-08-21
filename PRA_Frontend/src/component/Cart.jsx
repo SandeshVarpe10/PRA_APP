@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Service from "../service/cartService.js";
 import "../css/cart.css";
+import Cookie from "js-cookie";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
-
+  let userId=Cookie.get("userid");
   useEffect(() => {
-    Service.getCart(5).then((res) => setCart(res.data));
+    Service.getCart(userId).then((res) => setCart(res.data));
   }, []);
 
   const removeItem = (productId) => {
-    Service.removeFromCart(5, productId).then(() => {
+    Service.removeFromCart(userId, productId).then(() => {
       setCart(cart.filter((item) => item.product_id !== productId));
     });
   };
 
   const updateQty = (productId, qty) => {
     if (qty < 1) return;
-    Service.updateQuantity(5, productId, qty).then(() => {
+    Service.updateQuantity(userId, productId, qty).then(() => {
       setCart(
         cart.map((item) =>
           item.product_id === productId ? { ...item, quantity: qty } : item

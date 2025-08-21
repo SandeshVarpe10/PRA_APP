@@ -65,7 +65,7 @@ router.get('/products/:subcategoryId', productCtrl.viewProductsBySubcategory);
 router.get('/product/:product_id', productCtrl.showProductDetails);
 router.get('/search-live', productCtrl.liveSearch);
 router.get("/updateProduct/:product_id", productCtrl.updateProductPage);
-router.post("/productupdatesave/:product_id", upload.single("image"), productCtrl.updateProductSave);
+router.post("/productupdatesave/:product_id", upload.single("product_image"), productCtrl.updateProductSave);
 router.get("/deleteProduct/:product_id", productCtrl.deleteProduct);
 
 

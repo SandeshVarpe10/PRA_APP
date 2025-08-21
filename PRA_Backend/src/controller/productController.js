@@ -483,29 +483,29 @@ exports.updateProductPage = async (req, res) => {
 exports.updateProductSave = async (req, res) => {
   const productId = req.params.product_id;
   const {
-    name,
-    subcategoryId,
+    product_name,
+    subcategory_id,
     brand,
     description,
-    stockUnit,
+    stock_unit,
     stock,
     price,
     discount,
     organic,
-    existingImage,
+    product_image, // existing image string
   } = req.body;
 
-  const image = req.file ? req.file.filename : existingImage;
+  const image = req.file ? req.file.filename : product_image;
 
   try {
     const result = await productmodel.updateProductSave(
       productId,
-      name,
+      product_name,
       image,
-      subcategoryId,
+      subcategory_id,
       brand,
       description,
-      stockUnit,
+      stock_unit,
       stock,
       price,
       discount,
@@ -514,15 +514,28 @@ exports.updateProductSave = async (req, res) => {
 
     if (result) {
       const updatedProduct = await productmodel.getProductById(productId);
-      res.render("ProductDetails.ejs", { product: updatedProduct });
+      return res.status(200).json({
+        success: true,
+        message: "Product updated successfully",
+        product: updatedProduct[0],
+      });
     } else {
-      res.status(500).send("Error updating product.");
+      return res.status(400).json({
+        success: false,
+        message: "Failed to update product",
+      });
     }
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Error saving updated product.");
+    console.error("Error updating product:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while updating product",
+      error: err.message,
+    });
   }
 };
+
+
 
 exports.deleteProduct = async (req, res) => {
   const productId = req.params.product_id;

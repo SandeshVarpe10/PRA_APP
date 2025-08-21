@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; 
+import { useParams, useNavigate, Link } from "react-router-dom"; 
 import "../css/productByCat.css";
 import service from "../service/service";
 import Cookies from "js-cookie";
@@ -43,7 +43,7 @@ export default function ProductByCat() {
       return;
     }
 
-    CartService.addToCarts(userId, product.product_id, 1)
+    CartService.addToCart(userId, product.product_id, 1)
       .then(() => {
         alert(`${product.product_name} added to cart!`);
       })
@@ -52,6 +52,20 @@ export default function ProductByCat() {
         alert("Something went wrong while adding to cart.");
       });
   };
+
+   const handleDelete = (id) => {
+        if (window.confirm("Are you sure you want to delete this product?")) {
+          service
+            .deleteProduct(id)
+            .then(() => {
+              setProducts(products.filter((p) => p.product_id !== id));
+            })
+            .catch((err) => {
+              console.error("Error deleting product:", err);
+            });
+        }
+  };
+
 
   if (loading) {
     return <h2 className="loading-text">Loading...</h2>;
@@ -122,14 +136,20 @@ export default function ProductByCat() {
                 </div>
               </a>
 
-              <div className="product-actions">
+              <div className="product-actions d-flex justify-content-center">
                 {userType === "admin" ? (
                   <>
-                    <button className="update-btn">
-                      ✏️ Update
-                    </button>
-                    <button className="delete-btn">
-                      ❌ Delete
+                     <Link
+                  to={`/upd-product/${product.product_id}`}
+                  className="subcat-btn update"
+                >
+                  ✏️ Update
+                </Link>
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleDelete(product.product_id)}
+                    >
+                      🗑 Delete
                     </button>
                   </>
                 ) : (
