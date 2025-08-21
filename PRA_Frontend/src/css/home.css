@@ -1,8 +1,8 @@
 
 .logo{
-    color: black;
+    color: rgb(255, 255, 255);
     font-size: 30px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,21 +15,14 @@
     align-items: center;
     gap: 20px;
 }
-
+/* 
 .cart-btn{
     color: white;
-    background-color: #ed3af7;
-}
+ background: linear-gradient(90deg, #ff4d6d, #df3353);
+} */
 
 .login-btn{
-  border: 1px solid rgb(235, 54, 255);
-  color: #e619f9;
-  background-color: #e619f9;
-}
-.login-btn:hover{
-  border: none;
-  background-color: #e619f9;
-  color: white;
+ background: linear-gradient(90deg, #ff4d6d, #df3353);
 }
 
     .navbar{
@@ -44,10 +37,11 @@
     }
     .navbar-search{
       width: 60%;
+      height: 35px;
       color: black;
       border-radius: 20px;
       text-align: center;
-      background-color: #ffc7fa;
+      background-color: #ffffff;
       border: none;
     }
     .category-item {
@@ -59,11 +53,12 @@
       width: 100px;
     }
     .category-select{
-      background-color: #ffc7fa;
+      background-color: #ffffff;
       color: rgb(0, 0, 0);
       border: none;
       border-radius: 20px;
       padding: 0px 10px;
+      height: 35px;
     }
     .category-item:hover {
       color: #ffb0f3;
@@ -77,9 +72,10 @@
     .category-bar {
     overflow-x: auto;
     white-space: nowrap;
-      background: linear-gradient(to right, #f9e5ff, #f9e5ff);
+      /* background: linear-gradient(to right, #f9e5ff, #f9e5ff); */
     padding: 10px;
     height: 80px;
+    scrollbar-width: none;
   }
 
   .category-button {
@@ -89,19 +85,20 @@
     border-radius: 50px;
     font-weight: 500;
     color: white;
-    background: linear-gradient(135deg, #e6c0f3 0%, #c925ff 100%);
+      background: linear-gradient(90deg, #ff4d6d, #3b5998); /* pink to dark blue gradient */
+
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     display: inline-flex;
     align-items: center;
     /* gap: 10px; */
     transition: all 0.3s ease;
-    height: 100%;
+    height: 80%;
   }
 
   .category-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-    background: linear-gradient(135deg, #e619f9 0%, #f3d3ff 100%);
+    background: linear-gradient(135deg, #3b5998 0%, #ff4d6d 100%);
   }
 
   .category-button i {
@@ -117,7 +114,7 @@
 
     h3 {
       margin-top: 50px;
-      color: #00ac89;
+      color: #181818d6;
       font-size: 26px;
       border-left: 6px solid #010101;
       padding-left: 15px;

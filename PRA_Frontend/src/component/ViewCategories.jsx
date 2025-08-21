@@ -97,7 +97,7 @@ export default function ViewCategories() {
                       <div className="dropdown-menu">
                         <Link
                           className="dropdown-item"
-                          to={`/add-subcategory/${cat.id}`}
+                          to={`/add-subcategory`}
                         >
                           ➕ Add Sub-Category
                         </Link>

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import service from "../service/service";
+import "../css/viewSubCategory.css";
 
 export default function ViewSubCategory() {
   const { categoryId } = useParams();
   const [subcategories, setSubcategories] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [msg, setMsg] = useState("");
+    const navigate = useNavigate();
 
   useEffect(() => {
     if (categoryId) {
-      service.getSubCatById(categoryId)
+      service
+        .getSubCatById(categoryId)
         .then((res) => {
-            console.log(res.data);
           setSubcategories(res.data.subcategories || []);
           setCategoryName(res.data.categoryName || "Unknown Category");
         })
@@ -24,70 +26,70 @@ export default function ViewSubCategory() {
     }
   }, [categoryId]);
 
+const handleDelete = (Cid, Sid) => {
+  if (window.confirm("Are you sure you want to delete this subcategory?")) {
+    service.deleteSubCat(Cid, Sid)
+      .then((res) => {
+        setMsg(res.data.msg || "Subcategory deleted successfully!");
+        setSubcategories((prev) =>
+          prev.filter((subcat) => subcat.subcategory_id !== Sid)
+        );
+        navigate();
+      })
+      .catch(() => setMsg("Error deleting subcategory!"));
+  }
+};
+
+
   return (
-    <div className="container mt-5">
-      <h2 className="category-header">{categoryName} - Subcategories</h2>
+    <div className="subcat-wrapper">
+      <h2 className="subcat-title">{categoryName} - Subcategories</h2>
 
-      {msg && <div className="alert alert-danger text-center">{msg}</div>}
+      {msg && <div className="subcat-alert">{msg}</div>}
 
-      <div className="row">
+      <div className="subcat-grid">
         {subcategories.length > 0 ? (
           subcategories.map((sub) => (
-            <div className="col-md-4 mb-4" key={sub.subcategory_id}>
-              <div className="card h-100 shadow-sm">
-                <img
-                  src={`/images/${sub.image}`}
-                  className="card-img-top"
-                  alt={sub.subcategory_name}
-                />
-                <div className="card-body text-center">
-                  <h5 className="card-title">{sub.subcategory_name}</h5>
-                </div>
-                <div className="card-footer bg-white border-top-0">
-                  <div className="btn-group">
-                    <Link
-                      to={`/updatesubcategory/${categoryId}/${sub.subcategory_id}`}
-                      className="btn btn-warning btn-sm"
-                    >
-                      Update
-                    </Link>
-                    <Link
-                      to={`/deleteSubCat/${categoryId}/${sub.subcategory_id}`}
-                      className="btn btn-danger btn-sm"
-                      onClick={(e) => {
-                        if (!window.confirm("Are you sure you want to delete this subcategory?")) {
-                          e.preventDefault();
-                        }
-                      }}
-                    >
-                      Delete
-                    </Link>
-                    <Link
-                      to={`/subcategorydetails/${categoryId}/${sub.subcategory_id}`}
-                      className="btn btn-info btn-sm"
-                    >
-                      View Details
-                    </Link>
-                    <Link
-                      to={`/viewProBySubCat/${sub.subcategory_id}`}
-                      className="btn btn-success btn-sm"
-                    >
-                      View Products
-                    </Link>
-                  </div>
-                </div>
+            <div className="subcat-card" key={sub.subcategory_id}>
+              <img
+                src={`http://localhost:3000/images/${sub.image}`}
+                className="subcat-img"
+                alt={sub.subcategory_name}
+              />
+              <div className="subcat-body">
+                <h5 className="subcat-name">{sub.subcategory_name}</h5>
+              </div>
+              <div className="subcat-actions">
+                <Link
+                  to={`/updatesubcategory/${categoryId}/${sub.subcategory_id}`}
+                  className="subcat-btn update"
+                >
+                  ✏️ Update
+                </Link>
+                <Link
+                  to={`/deleteSubCat/${sub.category_id}/${sub.subcategory_id}`}
+                  className="subcat-btn delete"
+                  onClick={() => handleDelete(sub.category_id,sub.subcategory_id)}
+                >
+                  🗑️ Delete
+                </Link>
+              
+                <Link
+                  to={`/viewProBySubCat/${sub.subcategory_id}`}
+                  className="subcat-btn product"
+                >
+                  📦 Products
+                </Link>
               </div>
             </div>
           ))
         ) : (
-          <div className="col-12 text-center">
-            <h5>No subcategories found</h5>
-          </div>
+          <div className="subcat-empty">No subcategories found</div>
         )}
       </div>
 
-      <div className="text-center mt-5 mb-3">
-        <Link to="/view-category" className="btn btn-lg btn-secondary">
+      <div className="subcat-footer">
+        <Link to="/view-category" className="subcat-back-btn">
           ← Back to Categories
         </Link>
       </div>

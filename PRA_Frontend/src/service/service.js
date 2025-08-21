@@ -10,6 +10,25 @@ class Service {
   getSubCat() {
     return axios.get("http://localhost:3000/view-subcategory");
   }
+  updSubCategoryById(Cid, Sid, formData) {
+  return axios.post(`http://localhost:3000/updatesubcategory/${Cid}/${Sid}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
+}
+
+  
+  saveSubCategory(subcategory) {
+  return axios.post("http://localhost:3000/subcategorysave", subcategory, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+} 
+  deleteSubCat(Cid, Sid){
+    return axios.get(`http://localhost:3000/deleteSubCat/${Cid}/${Sid}`);
+  }
+ getSubCatById(Cid) {
+    return axios.get(`http://localhost:3000/view-subcategories/${Cid}`);
+  }
+
   saveProduct(product) {
     return axios.post("http://localhost:3000/productsave", product, {
       headers: { "Content-Type": "multipart/form-data" },
@@ -28,11 +47,11 @@ class Service {
   getProductBySubCat(subcategoryId) {
     return axios.get(`http://localhost:3000/products/${subcategoryId}`);
   }
+  deleteProduct(product_id) {
+    return axios.get(`http://localhost:3000/deleteProduct/${product_id}`);
+  }
   getProductById(product_id) {
     return axios.get(`http://localhost:3000/product/${product_id}`);
-  }
-  getSubCatById(Cid) {
-    return axios.get(`http://localhost:3000/view-subcategories/${Cid}`);
   }
   getAllUsers() {
     return axios.get("http://localhost:3000/get-users");
@@ -50,33 +69,38 @@ class Service {
     return axios.post("http://localhost:3000/updateSaveCategory", data);
   }
 
+  getLoginResult(credentials) {
+    console.log("Sending login request with credentials:", credentials);
+    return axios.post("http://localhost:3000/logindata", credentials, {
+      withCredentials: true,
+    });
+  }
 
-    getLoginResult(credentials) {
-        console.log("Sending login request with credentials:", credentials);
-        return axios.post("http://localhost:3000/logindata", credentials,{ withCredentials: true });
-    }
+  getRegisterResult(userData) {
+    return axios.post("http://localhost:3000/registerdata", userData);
+  }
 
-    getRegisterResult(userData) {
-        return axios.post("http://localhost:3000/registerdata", userData);
-    }
+  getAdminProfile() {
+    return axios.get("http://localhost:3000/Profile", {
+      withCredentials: true,
+    });
+  }
 
-    getAdminProfile() {
-       return axios.get("http://localhost:3000/Profile", { withCredentials: true });
-   }
-   
-   getAdminData(uid){
+  getAdminData(uid) {
     return axios.get(`http://localhost:3000/UpdataAdminProfile/${uid}`);
-   }
-   updateAdminData(uid, formData) {
-      return axios.put(`http://localhost:3000/updatedData/${uid}`, formData);
-   }
-
-   handleLogout ()  {
-    return axios.get("http://localhost:3000/Adminlogout", { withCredentials: true });
+  }
+  updateAdminData(uid, formData) {
+    return axios.put(`http://localhost:3000/updatedData/${uid}`, formData);
   }
 
-
+  handleLogout() {
+    return axios.get("http://localhost:3000/Adminlogout", {
+      withCredentials: true,
+    });
   }
-
+  deleteUser(uid) {
+    return axios.get(`http://localhost:3000/delete-user/${uid}`);
+  }
+}
 
 export default new Service();

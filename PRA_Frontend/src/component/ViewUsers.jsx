@@ -4,20 +4,33 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function ViewUsers() {
   const [users, setUsers] = useState([]);
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
     service
       .getAllUsers()
       .then((res) => {
-        setUsers(res.data.result); // ensure backend sends { result: [...] }
+        setUsers(res.data.result); 
       })
       .catch((err) => {
         console.error("Error fetching users:", err);
       });
   }, []);
 
+  const handleDelete = (id) => {
+      if (window.confirm("Are you sure you want to delete this user?")) {
+        service.deleteUser(id)
+          .then((res) => {
+            setMsg(res.data.msg || "User deleted successfully!");
+            setUsers((prev) => prev.filter((user) => user.id !== id));
+          })
+          .catch(() => setMsg("Error deleting user!"));
+      }
+  };
+
   return (
     <div className="container-fluid my-5 px-5">
+      {msg && <div className="alert alert-info">{msg}</div>}
       <div className="card shadow-lg border-0 rounded-4">
         <h2 className="card-header text-dark text-center rounded-top-4">
           Users List
@@ -70,7 +83,7 @@ export default function ViewUsers() {
                           {user.type}
                         </span>
                       </td>
-                      <td><button className="btn-sm border-0 btn-danger" onClick={""}>delete</button></td>
+                      <td><button className="btn-sm border-0 btn-danger" onClick={()=>handleDelete(user.id)}>delete</button></td>
                     </tr>
                   ))
                 ) : (
