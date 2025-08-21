@@ -1,91 +1,153 @@
-/* EditAdminProfile.css */
+/* ===== EditAdminProfile.css ===== */
 
-/* Page background */
+:root {
+  --bg: #0f1221;
+  --card: #161a2f;
+  --text: #e9ecf1;
+  --muted: #a8b0c3;
+  --accent: #ff6ec7;
+  --accent-2: #7aa2ff;
+  --border: #2a3050;
+  --success: #38d39f;
+}
+
+* { box-sizing: border-box; }
+
 .edit-profile-container {
-  max-width: 500px;
-  margin: 50px auto;
-  padding: 40px 30px;
-  border-radius: 20px;
-  background: linear-gradient(145deg, #0f2027, #203a43, #2c5364); /* Dark blue gradient */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(1200px 600px at 10% -10%, #1b2040 0%, transparent 60%),
+              radial-gradient(900px 500px at 110% 10%, #2a1f35 0%, transparent 60%),
+              var(--bg);
+  color: var(--text);
 }
 
-.edit-profile-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
-}
-
-/* Heading */
-.edit-profile-container h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #ff6ec7; /* Pink accent */
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-  font-size: 28px;
-}
-
-/* Form */
 .edit-profile-form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  width: 100%;
+  max-width: 560px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
 
-/* Form groups */
+.edit-profile-form h2,
+.edit-profile-container > h2 {
+  margin: 0 0 14px;
+  font-size: 24px;
+  letter-spacing: 0.3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* form groups */
 .form-group {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
 .form-group label {
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #ff8ed6; /* light pink for labels */
   font-size: 14px;
+  color: var(--muted);
 }
 
-.form-group input {
-  padding: 12px 15px;
-  border-radius: 12px;
-  border: none;
+/* inputs */
+.edit-profile-form input[type="text"],
+.edit-profile-form input[type="email"],
+.edit-profile-form input[type="password"],
+.edit-profile-form input[type="number"],
+.edit-profile-form input[type="file"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #11152a;
+  color: var(--text);
   outline: none;
-  font-size: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  transition: all 0.3s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.02s ease;
 }
 
-.form-group input:focus {
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 10px #ff6ec7;
+.edit-profile-form input::placeholder {
+  color: #7c85a3;
 }
 
-/* Submit button */
+.edit-profile-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 110, 199, 0.15);
+}
+
+.edit-profile-form input[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* file input spacing */
+.edit-profile-form input[type="file"] {
+  padding: 8px;
+}
+
+/* preview image */
+.edit-profile-form img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin-top: 10px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* submit button */
 .btn-save {
-  padding: 14px;
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 8px;
   border: none;
-  border-radius: 50px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #0b0f1e;
+  font-weight: 700;
+  letter-spacing: 0.3px;
   cursor: pointer;
-  background: linear-gradient(135deg, #ff6ec7, #6a82fb); /* Pink to blue gradient */
-  color: #fff;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+  transition: transform 0.06s ease, filter 0.2s ease;
 }
 
 .btn-save:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+  filter: brightness(1.05);
 }
 
-/* Loading & Error messages */
-.edit-profile-container div {
-  text-align: center;
-  font-size: 16px;
-  margin-top: 20px;
-  color: #ff6ec7;
+.btn-save:active {
+  transform: translateY(1px);
+}
+
+/* small screens */
+@media (max-width: 480px) {
+  .edit-profile-form {
+    padding: 16px;
+    border-radius: 14px;
+  }
+  .edit-profile-form h2,
+  .edit-profile-container > h2 {
+    font-size: 20px;
+  }
+}
+
+/* nice subtle divider between groups (optional) */
+.form-group:not(:last-child) {
+  position: relative;
+}
+.form-group:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -7px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
 }

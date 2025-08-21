@@ -13,9 +13,9 @@ function EditAdminProfile() {
     password: "",
     age: "",
     type: "admin",
+    photo:null
   });
 
-  const [photoFile, setPhotoFile] = useState(null); // new photo file
   const [photoPreview, setPhotoPreview] = useState(""); // for preview
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,7 +31,9 @@ function EditAdminProfile() {
           password: data.password,
           age: data.age,
           type: data.type,
+          photo: data.photo || null
         });
+        console.log(data.photo);
         setPhotoPreview(data.photo || ""); // show current photo if exists
         setLoading(false);
       })
@@ -43,22 +45,11 @@ function EditAdminProfile() {
 
   // Handle input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value,type,files } = e.target;
+    setFormData({ ...formData, [name]: type === "file" ? files[0] :value });
   };
-
-  // Handle photo upload
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    setPhotoFile(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setPhotoPreview(reader.result);
-      reader.readAsDataURL(file);
-    } else {
-      setPhotoPreview("");
-    }
-  };
+  
+  
 
   // Submit form
   const handleSubmit = (e) => {
@@ -70,8 +61,9 @@ function EditAdminProfile() {
     data.append("password", formData.password);
     data.append("age", formData.age);
     data.append("type", formData.type);
-    if (photoFile) data.append("photo", photoFile); // only append if new file
-
+    data.append("photo", formData.photo); // only append if new file
+    console.log(formData.photo);
+    
     service.updateAdminData(uid, data)
       .then((res) => {
         alert(res.data.message);
@@ -109,11 +101,11 @@ function EditAdminProfile() {
 
         <div className="form-group">
           <label>Photo:</label>
-          <input type="file" accept="image/*" onChange={handlePhotoChange} />
+          <input type="file" name="photo" accept="image/*" onChange={handleChange} />
           {photoPreview && (
             <img
-              src={photoPreview}
-              alt="Preview"
+              src={`http://localhost:3000/images/${photoPreview}` }
+              alt="Preview" 
               style={{ width: "120px", height: "120px", marginTop: "10px", borderRadius: "12px", objectFit: "cover", border: "2px solid #ff6ec7" }}
             />
           )}

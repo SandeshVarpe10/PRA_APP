@@ -1,0 +1,33 @@
+.recent-container {
+  text-align: left;   /* सगळं left ला */
+  margin: 20px 0;
+}
+
+.recent-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.recent-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.recent-btn {
+  background-color: #f3f0f7;
+  color: #222;
+  padding: 10px 20px;        /* मोठं केले */
+  border: none;
+  border-radius: 25px;       /* pill shape */
+  font-size: 16px;           /* text मोठं */
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.recent-btn:hover {
+  background-color: #e0d9ec;
+}

@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; 
+import { useParams, useNavigate } from "react-router-dom"; 
 import "../css/productByCat.css";
 import service from "../service/service";
+import Cookies from "js-cookie";
 import CartService from "../service/cartService.js";
 
 export default function ProductByCat() {
   const { subcategoryId } = useParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userType, setUserType] = useState("none");
+  const navigate = useNavigate();
 
-  // 👇 You can fetch userId from localStorage/session/JWT later
-  const userId = 5;
+  useEffect(() => {
+    const type = Cookies.get("type") || "none";
+    setUserType(type);
+  }, []);
+
+  
 
   useEffect(() => {
     setLoading(true);
@@ -28,6 +35,14 @@ export default function ProductByCat() {
   }, [subcategoryId]);
 
   const addToCart = (product) => {
+
+    const userId = Cookies.get("userid"); // ✅ always check latest
+    if (!userId) {
+      alert("Please login to add products to your cart!");
+      navigate("/login");   // ✅ redirect to login
+      return;
+    }
+
     CartService.addToCarts(userId, product.product_id, 1)
       .then(() => {
         alert(`${product.product_name} added to cart!`);
@@ -107,12 +122,25 @@ export default function ProductByCat() {
                 </div>
               </a>
 
-              <button
-                className="add-to-cart-btn"
-                onClick={() => addToCart(product)}
-              >
-                🛒 Add to Cart
-              </button>
+              <div className="product-actions">
+                {userType === "admin" ? (
+                  <>
+                    <button className="update-btn">
+                      ✏️ Update
+                    </button>
+                    <button className="delete-btn">
+                      ❌ Delete
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="add-to-cart-btn"
+                    onClick={() => addToCart(product)}
+                  >
+                    🛒 Add to Cart
+                  </button>
+                )}
+              </div>
             </div>
           );
         })}

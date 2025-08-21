@@ -20,30 +20,34 @@ import ViewCatDetail from './component/viewCatDetail';
 import UpdateCategory from './component/UpdateCategory';
 import UserProfile from './component/UserProfile';
 import Cart from './component/Cart';
+import ProtectedRoute from './component/ProtectedRoute';
+import SearchPage from './component/SearchPage';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          
           <Route path='/' element={<Home/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
-          <Route path='/adminDashboard' element={<AdminDashboard/>}></Route>
+          <Route path='/adminDashboard' element={ <ProtectedRoute allowedTypes={["admin"]}><AdminDashboard /></ProtectedRoute>}/>
           <Route path='/userDashboard' element={<UserDashboard/>}></Route>
           <Route path='/edit-profile/:uid' element={<EditAdminProfile/>}></Route>
-          <Route path='/add-product' element={<AddProduct/>}></Route>
+           <Route path='/add-product' element={ <ProtectedRoute allowedTypes={["admin"]}><AddProduct /></ProtectedRoute>}/>
           <Route path='/register' element={<Register/>}></Route>
-          <Route path='/add-category' element={<AddCategory/>}></Route>
-          <Route path='/view-product'  element={<ViewProducts/>}></Route>
-          <Route path='/view-category'  element={<ViewCategories/>}></Route>
+          <Route path='/add-category' element={<ProtectedRoute allowedTypes={["admin"]}><AddCategory/></ProtectedRoute>}></Route>
+          <Route path='/view-product'  element={<ProtectedRoute allowedTypes={["admin"]}><ViewProducts/></ProtectedRoute>}></Route>
+          <Route path='/view-category'  element={<ProtectedRoute allowedTypes={["admin"]}><ViewCategories/></ProtectedRoute>}></Route>
           <Route path='/products/:subcategoryId'  element={<ProductByCat/>}></Route>
-          <Route path='/product/:product_id'  element={<ProductDetails/>}></Route>
-          <Route path='/view-subcategories/:Cid'  element={<ViewSubcategory/>}></Route>
-          <Route path='/get-users'  element={<ViewUsers/>}></Route>
-          <Route path='/viewCategoryDetails/:id'  element={<ViewCatDetail/>}></Route>
-          <Route path='/updateCategory/:id'  element={<UpdateCategory/>}></Route>
+          <Route path='/product/:product_id'  element={<ProtectedRoute allowedTypes={["admin"]}><ProductDetails/></ProtectedRoute>}></Route>
+          <Route path='/view-subcategories/:Cid'  element={<ProtectedRoute allowedTypes={["admin"]}><ViewSubcategory/></ProtectedRoute>}></Route>
+          <Route path='/get-users'  element={<ProtectedRoute allowedTypes={["admin"]}><ViewUsers/></ProtectedRoute>}></Route>
+          <Route path='/viewCategoryDetails/:id'  element={<ProtectedRoute allowedTypes={["admin"]}><ViewCatDetail/></ProtectedRoute>}></Route>
+          <Route path='/updateCategory/:id'  element={<ProtectedRoute allowedTypes={["admin"]}><UpdateCategory/></ProtectedRoute>}></Route>
           <Route path='/user-profile'  element={<UserProfile/>}></Route>
-          <Route path='/cart'  element={<Cart/>}></Route>
+          <Route path='/cart'  element={<ProtectedRoute allowedTypes={["admin"]}><Cart/></ProtectedRoute>}></Route>
+          <Route path='/search-live' element={<SearchPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

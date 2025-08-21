@@ -3,6 +3,7 @@ let router = express.Router();
 let userCtrl = require("../controller/userController");
 let productCtrl = require("../controller/productController");
 const cartController = require("../controller/cartController.js");
+const recomController=require("../controller/recommendationcontroller.js")
 
 let upload = require("../middlware/PhotoUpload.js");
 const { getUserFromToken } = require("../middlware/checkHomeToken.js");
@@ -14,7 +15,7 @@ router.post("/registerdata", upload.single("photo"), userCtrl.SaveUserData);
 router.post("/logindata", userCtrl.LoginUserData);
 router.get("/Profile", getUserFromToken, userCtrl.getAdminProfile);
 router.get("/UpdataAdminProfile/:uid",userCtrl.getAdminData)
-router.put("/updatedData/:uid", userCtrl.saveUpdatedAdmin);
+router.put("/updatedData/:uid",upload.single("photo"), userCtrl.saveUpdatedAdmin);
 
 //router.get("/adminDashboard", getUserFromToken, userCtrl.adminDashboard);
 router.get("/Adminlogout", userCtrl.logoutUser);
@@ -72,5 +73,10 @@ router.post("/cart/add", cartController.addToCart);
 router.get("/cart/:userId", cartController.getCart);
 router.delete("/cart/:userId/:productId", cartController.removeFromCart);
 router.put("/cart/:userId/:productId", cartController.updateQuantity);
+
+
+
+router.get("/userHistory/:userId", recomController.getUserHistory);
+router.get("/recommendations/:userId", recomController.getRecommendations);
 
 module.exports = router;

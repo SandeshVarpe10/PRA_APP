@@ -57,8 +57,12 @@ class Service {
     }
 
     getRegisterResult(userData) {
-        return axios.post("http://localhost:3000/registerdata", userData);
-    }
+  return axios.post("http://localhost:3000/registerdata", userData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+}
 
     getAdminProfile() {
        return axios.get("http://localhost:3000/Profile", { withCredentials: true });
@@ -68,11 +72,28 @@ class Service {
     return axios.get(`http://localhost:3000/UpdataAdminProfile/${uid}`);
    }
    updateAdminData(uid, formData) {
-      return axios.put(`http://localhost:3000/updatedData/${uid}`, formData);
+    return axios.put(`http://localhost:3000/updatedData/${uid}`, formData,{
+       headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    });
    }
 
    handleLogout ()  {
     return axios.get("http://localhost:3000/Adminlogout", { withCredentials: true });
+  }
+
+  getUserHistory(userId) {
+    console.log(userId);
+    let promise= axios.get(`http://localhost:3000/userHistory/${userId}`);
+    console.log("ppp",promise);
+    return promise;
+  }
+
+  // 2️⃣ Recommendations based on CBF
+  getRecommendations(userId) {
+  
+    return axios.get(`http://localhost:3000/recommendations/${userId}`);
   }
 
 
