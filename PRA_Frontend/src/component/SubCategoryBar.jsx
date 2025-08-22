@@ -2,7 +2,7 @@ import React from "react";
 
 function SubCategoryBar({ subcategories }) {
   return (
-    <div className="category-bar d-flex ">
+    <div className="category-bar d-flex">
       {subcategories.length > 0 ? (
         subcategories.map((cat) => (
           <button

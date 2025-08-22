@@ -13,7 +13,7 @@ function EditAdminProfile() {
     password: "",
     age: "",
     type: "admin",
-    photo:null
+    photo: null,
   });
 
   const [photoPreview, setPhotoPreview] = useState(""); // for preview
@@ -22,7 +22,8 @@ function EditAdminProfile() {
 
   // Fetch admin data
   useEffect(() => {
-    service.getAdminData(uid)
+    service
+      .getAdminData(uid)
       .then((res) => {
         const data = Array.isArray(res.data) ? res.data[0] : res.data;
         setFormData({
@@ -31,7 +32,7 @@ function EditAdminProfile() {
           password: data.password,
           age: data.age,
           type: data.type,
-          photo: data.photo || null
+          photo: data.photo || null,
         });
         console.log(data.photo);
         setPhotoPreview(data.photo || ""); // show current photo if exists
@@ -45,11 +46,9 @@ function EditAdminProfile() {
 
   // Handle input changes
   const handleChange = (e) => {
-    const { name, value,type,files } = e.target;
-    setFormData({ ...formData, [name]: type === "file" ? files[0] :value });
+    const { name, value, type, files } = e.target;
+    setFormData({ ...formData, [name]: type === "file" ? files[0] : value });
   };
-  
-  
 
   // Submit form
   const handleSubmit = (e) => {
@@ -62,13 +61,13 @@ function EditAdminProfile() {
     data.append("age", formData.age);
     data.append("type", formData.type);
     if (formData.photo instanceof File) {
-  data.append("photo", formData.photo);
-} else {
-  data.append("existingPhoto", formData.photo); // ✅ old photo filename
-}
+      data.append("photo", formData.photo);
+    } else {
+      data.append("existingPhoto", formData.photo); // ✅ old photo filename
+    }
 
-    
-    service.updateAdminData(uid, data)
+    service
+      .updateAdminData(uid, data)
       .then((res) => {
         alert(res.data.message);
         navigate("/adminDashboard");
@@ -82,35 +81,71 @@ function EditAdminProfile() {
   return (
     <div className="edit-profile-container">
       <h2>Edit Admin Profile</h2>
-      <form className="edit-profile-form" onSubmit={handleSubmit} encType="multipart/form-data">
+      <form
+        className="edit-profile-form"
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
         <div className="form-group">
           <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="form-group">
           <label>Email:</label>
-          <input type="email" name="email" value={formData.email} onChange={handleChange} />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="form-group">
           <label>Password:</label>
-          <input type="password" name="password" value={formData.password} onChange={handleChange} />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="form-group">
           <label>Age:</label>
-          <input type="number" name="age" value={formData.age} onChange={handleChange} />
+          <input
+            type="number"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="form-group">
           <label>Photo:</label>
-          <input type="file" name="photo" accept="image/*" onChange={handleChange} />
+          <input
+            type="file"
+            name="photo"
+            accept="image/*"
+            onChange={handleChange}
+          />
           {photoPreview && (
             <img
-              src={`http://localhost:3000/images/${photoPreview}` }
-              alt="Preview" 
-              style={{ width: "120px", height: "120px", marginTop: "10px", borderRadius: "12px", objectFit: "cover", border: "2px solid #ff6ec7" }}
+              src={`http://localhost:3000/images/${photoPreview}`}
+              alt="Preview"
+              style={{
+                width: "120px",
+                height: "120px",
+                marginTop: "10px",
+                borderRadius: "12px",
+                objectFit: "cover",
+                border: "2px solid #ff6ec7",
+              }}
             />
           )}
         </div>
@@ -120,7 +155,9 @@ function EditAdminProfile() {
           <input type="text" name="type" value={formData.type} disabled />
         </div>
 
-        <button type="submit" className="btn-save">Save Changes</button>
+        <button type="submit" className="btn-save">
+          Save Changes
+        </button>
       </form>
     </div>
   );

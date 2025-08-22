@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate,Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import "../css/productDetails.css";
 import Cookies from "js-cookie";
 import service from "../service/service";
@@ -13,10 +13,11 @@ const ProductDetails = () => {
 
   // Always get the latest cookies
   const userType = Cookies.get("type") || "none";
-  
+
   useEffect(() => {
     setLoading(true);
-    service.getProductById(product_id)
+    service
+      .getProductById(product_id)
       .then((res) => {
         setProduct(res.data);
         setLoading(false);
@@ -46,20 +47,18 @@ const ProductDetails = () => {
       });
   };
 
-
   const handleDelete = (id) => {
-          if (window.confirm("Are you sure you want to delete this product?")) {
-            service
-              .deleteProduct(id)
-              .then(() => {
-                setProduct(product.filter((p) => p.product_id !== id));
-              })
-              .catch((err) => {
-                console.error("Error deleting product:", err);
-              });
-          }
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      service
+        .deleteProduct(id)
+        .then(() => {
+          setProduct(product.filter((p) => p.product_id !== id));
+        })
+        .catch((err) => {
+          console.error("Error deleting product:", err);
+        });
+    }
   };
-
 
   if (loading) return <p>Loading product details...</p>;
   if (!product) return <p>Product not found.</p>;
@@ -79,7 +78,8 @@ const ProductDetails = () => {
 
   return (
     <>
-      <br /><br />
+      <br />
+      <br />
       <h2 className="card-title">Product Details</h2>
       <div className="product-container">
         <img
@@ -101,7 +101,9 @@ const ProductDetails = () => {
           </div>
           <div className="detail-row">
             <span className="label">Stock:</span>
-            <span className="value">{product.stock} {product.stock_unit}</span>
+            <span className="value">
+              {product.stock} {product.stock_unit}
+            </span>
           </div>
           <div className="detail-row">
             <span className="label">Stock Unit:</span>
@@ -113,7 +115,9 @@ const ProductDetails = () => {
           </div>
           <div className="detail-row">
             <span className="label">Organic:</span>
-            <span className="value">{product.organic === 1 ? "Yes" : "No"}</span>
+            <span className="value">
+              {product.organic === 1 ? "Yes" : "No"}
+            </span>
           </div>
 
           <div className="price-section">
@@ -126,22 +130,26 @@ const ProductDetails = () => {
           {userType === "admin" ? (
             <div className="d-flex gap-2">
               <Link
-                  to={`/upd-product/${product.product_id}`}
-                  className="subcat-btn update"
-                >
-                  ✏️ Update
-                </Link>
-                    <button
-                      className="btn-delete"
-                      onClick={() => {handleDelete(product.product_id)
-                          navigate(`/products/${product.subcategory_id}`)
-                      }}
-                    >
-                      🗑 Delete
-                    </button>
+                to={`/upd-product/${product.product_id}`}
+                className="subcat-btn update"
+              >
+                ✏️ Update
+              </Link>
+              <button
+                className="btn-delete"
+                onClick={() => {
+                  handleDelete(product.product_id);
+                  navigate(`/products/${product.subcategory_id}`);
+                }}
+              >
+                🗑 Delete
+              </button>
             </div>
           ) : (
-            <button className="btn btn-primary" onClick={() => addToCart(product)}>
+            <button
+              className="btn btn-primary"
+              onClick={() => addToCart(product)}
+            >
               🛒 Add to Cart
             </button>
           )}

@@ -4,7 +4,7 @@ import Service from "../service/service";
 import "../css/updatePro.css";
 
 export default function UpdateProduct() {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -66,205 +66,207 @@ export default function UpdateProduct() {
     e.preventDefault();
 
     const data = new FormData();
-data.append("id", formData.id);
-data.append("product_name", formData.name);
-if (formData.image) data.append("product_image", formData.image);
-else data.append("product_image", formData.existingImage);
-data.append("subcategory_id", formData.subcategoryId);
-data.append("brand", formData.brand);
-data.append("description", formData.description);
-data.append("stock_unit", formData.stockUnit);
-data.append("stock", formData.stock);
-data.append("price", formData.price);
-data.append("discount", formData.discount);
-data.append("organic", formData.organic === "true" ? 1 : 0);
-
+    data.append("id", formData.id);
+    data.append("product_name", formData.name);
+    if (formData.image) data.append("product_image", formData.image);
+    else data.append("product_image", formData.existingImage);
+    data.append("subcategory_id", formData.subcategoryId);
+    data.append("brand", formData.brand);
+    data.append("description", formData.description);
+    data.append("stock_unit", formData.stockUnit);
+    data.append("stock", formData.stock);
+    data.append("price", formData.price);
+    data.append("discount", formData.discount);
+    data.append("organic", formData.organic === "true" ? 1 : 0);
 
     Service.updateProduct(id, data).then(() => {
       alert("✅ Product updated successfully!");
-      navigate("/products/"+formData.subcategoryId);
+      navigate("/products/" + formData.subcategoryId);
     });
   };
 
   return (
     <div className="upd-container">
       <div className="form-container">
-      <h2 className="form-title">Update Product Details</h2>
+        <h2 className="form-title">Update Product Details</h2>
 
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        {/* Product Name */}
-        <div className="form-group">
-          <label>Product Name</label>
-          <input
-            type="text"
-            name="name"
-            className="form-control"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {/* Current Image */}
-        {formData.existingImage && (
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          {/* Product Name */}
           <div className="form-group">
-            <label>Current Product Image</label>
-            <br />
-            <img
-              src={`http://localhost:3000/images/${formData.existingImage}`}
-              className="product-image-preview"
-              alt="Product"
-            />
+            <label>Product Name</label>
             <input
-              type="hidden"
-              name="existingImage"
-              value={formData.existingImage}
+              type="text"
+              name="name"
+              className="form-control"
+              value={formData.name}
+              onChange={handleChange}
+              required
             />
           </div>
-        )}
 
-        {/* Upload New Image */}
-        <div className="form-group">
-          <label>Change Product Image (Optional)</label>
-          <input
-            type="file"
-            name="image"
-            className="form-control"
-            accept="image/*"
-            onChange={handleChange}
-          />
-        </div>
+          {/* Current Image */}
+          {formData.existingImage && (
+            <div className="form-group">
+              <label>Current Product Image</label>
+              <br />
+              <img
+                src={`http://localhost:3000/images/${formData.existingImage}`}
+                className="product-image-preview"
+                alt="Product"
+              />
+              <input
+                type="hidden"
+                name="existingImage"
+                value={formData.existingImage}
+              />
+            </div>
+          )}
 
-        {/* Subcategory */}
-        <div className="form-group">
-          <label>Select Subcategory</label>
-          <select
-            name="subcategoryId"
-            className="form-control"
-            value={formData.subcategoryId}
-            onChange={handleChange}
-            required
-          >
-            <option value="">-- Choose Subcategory --</option>
-            {subcategories.map((subcat) => (
-              <option key={subcat.subcategory_id} value={subcat.subcategory_id}>
-                {subcat.subcategory_name}
-              </option>
-            ))}
-          </select>
-        </div>
+          {/* Upload New Image */}
+          <div className="form-group">
+            <label>Change Product Image (Optional)</label>
+            <input
+              type="file"
+              name="image"
+              className="form-control"
+              accept="image/*"
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="section-divider"></div>
+          {/* Subcategory */}
+          <div className="form-group">
+            <label>Select Subcategory</label>
+            <select
+              name="subcategoryId"
+              className="form-control"
+              value={formData.subcategoryId}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Choose Subcategory --</option>
+              {subcategories.map((subcat) => (
+                <option
+                  key={subcat.subcategory_id}
+                  value={subcat.subcategory_id}
+                >
+                  {subcat.subcategory_name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* Brand */}
-        <div className="form-group">
-          <label>Brand</label>
-          <input
-            type="text"
-            name="brand"
-            className="form-control"
-            value={formData.brand}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="section-divider"></div>
 
-        {/* Description */}
-        <div className="form-group">
-          <label>Description</label>
-          <textarea
-            name="description"
-            className="form-control"
-            rows="3"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          ></textarea>
-        </div>
+          {/* Brand */}
+          <div className="form-group">
+            <label>Brand</label>
+            <input
+              type="text"
+              name="brand"
+              className="form-control"
+              value={formData.brand}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Stock Unit */}
-        <div className="form-group">
-          <label>Stock Unit</label>
-          <select
-            name="stockUnit"
-            className="form-control"
-            value={formData.stockUnit}
-            onChange={handleChange}
-            required
-          >
-            <option value="">-- Choose Unit --</option>
-            <option value="kilogram">Kilogram</option>
-            <option value="piece">Piece</option>
-            <option value="liter">Liter</option>
-          </select>
-        </div>
+          {/* Description */}
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              name="description"
+              className="form-control"
+              rows="3"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            ></textarea>
+          </div>
 
-        {/* Stock Quantity */}
-        <div className="form-group">
-          <label>Stock Quantity</label>
-          <input
-            type="number"
-            name="stock"
-            className="form-control"
-            min="0"
-            step="1"
-            value={formData.stock}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          {/* Stock Unit */}
+          <div className="form-group">
+            <label>Stock Unit</label>
+            <select
+              name="stockUnit"
+              className="form-control"
+              value={formData.stockUnit}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Choose Unit --</option>
+              <option value="kilogram">Kilogram</option>
+              <option value="piece">Piece</option>
+              <option value="liter">Liter</option>
+            </select>
+          </div>
 
-        {/* Price */}
-        <div className="form-group">
-          <label>Price (per unit)</label>
-          <input
-            type="number"
-            name="price"
-            className="form-control"
-            step="0.01"
-            min="0"
-            value={formData.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          {/* Stock Quantity */}
+          <div className="form-group">
+            <label>Stock Quantity</label>
+            <input
+              type="number"
+              name="stock"
+              className="form-control"
+              min="0"
+              step="1"
+              value={formData.stock}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Discount */}
-        <div className="form-group">
-          <label>Discount (%)</label>
-          <input
-            type="number"
-            name="discount"
-            className="form-control"
-            step="0.01"
-            min="0"
-            value={formData.discount}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          {/* Price */}
+          <div className="form-group">
+            <label>Price (per unit)</label>
+            <input
+              type="number"
+              name="price"
+              className="form-control"
+              step="0.01"
+              min="0"
+              value={formData.price}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Organic */}
-        <div className="form-group">
-          <label>Is Organic?</label>
-          <select
-            name="organic"
-            className="form-control"
-            value={formData.organic}
-            onChange={handleChange}
-            required
-          >
-            <option value="">-- Select --</option>
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </div>
+          {/* Discount */}
+          <div className="form-group">
+            <label>Discount (%)</label>
+            <input
+              type="number"
+              name="discount"
+              className="form-control"
+              step="0.01"
+              min="0"
+              value={formData.discount}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        <button type="submit" className="btn btn-custom btn-block">
-          Update Product
-        </button>
-      </form>
-    </div>
+          {/* Organic */}
+          <div className="form-group">
+            <label>Is Organic?</label>
+            <select
+              name="organic"
+              className="form-control"
+              value={formData.organic}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Select --</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+
+          <button type="submit" className="btn btn-custom btn-block">
+            Update Product
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

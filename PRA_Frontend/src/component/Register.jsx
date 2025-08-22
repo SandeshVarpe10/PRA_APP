@@ -26,26 +26,29 @@ function Register({ msg }) {
 
   // Handle form submission
   // Handle form submission
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // FormData object तयार कर
-  const formDataToSend = new FormData();
-  formDataToSend.append("name", formData.name);
-  formDataToSend.append("email", formData.email);
-  formDataToSend.append("password", formData.password);
-  formDataToSend.append("age", formData.age);
-  formDataToSend.append("photo", formData.photo);   //  photo file
-  formDataToSend.append("created_at", formData.created_at);
+    // FormData object तयार कर
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("password", formData.password);
+    formDataToSend.append("age", formData.age);
+    formDataToSend.append("photo", formData.photo); //  photo file
+    formDataToSend.append("created_at", formData.created_at);
 
-  const response = await service.getRegisterResult(formDataToSend);
+    const response = await service.getRegisterResult(formDataToSend);
 
-  if (response.data.success) {
-    navigate("/userDashboard");
-  } else {
-    console.error("Registration Failed:", response?.data?.message || "Registration failed");
-  }
-};
+    if (response.data.success) {
+      navigate("/userDashboard");
+    } else {
+      console.error(
+        "Registration Failed:",
+        response?.data?.message || "Registration failed"
+      );
+    }
+  };
 
   return (
     <div className="register-main-container">

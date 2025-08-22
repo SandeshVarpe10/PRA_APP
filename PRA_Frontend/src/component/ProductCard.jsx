@@ -6,7 +6,7 @@ import "../css/productCard.css";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-  const userType = Cookies.get("type"); 
+  const userType = Cookies.get("type");
 
   const handleAddToCart = async () => {
     const userId = Cookies.get("userid");
@@ -44,7 +44,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div
-      className="product-card horizontal-card"
+      className="product-card horizontal-card mb-4"
       onClick={() => navigate(`/product/${product.product_id}`)}
     >
       <img
@@ -81,10 +81,7 @@ const ProductCard = ({ product }) => {
               </button>
             </>
           ) : (
-            <button
-              className="add-to-cart-btn"
-              onClick={handleAddToCart}
-            >
+            <button className="add-to-cart-btn" onClick={handleAddToCart}>
               🛒 Add to Cart
             </button>
           )}

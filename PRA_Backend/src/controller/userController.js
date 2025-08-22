@@ -4,7 +4,6 @@ let bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = "#4545#";
 
-
 exports.SaveUserData = async (req, res) => {
   try {
     const { name, email, password, age } = req.body;
@@ -32,33 +31,39 @@ exports.SaveUserData = async (req, res) => {
 
     const token = jwt.sign({ email, type }, SECRET_KEY, { expiresIn: "1h" });
 
-        res.cookie("token", token, {
-            httpOnly: true,
-            maxAge: 3600000, // 1 hour
-            sameSite: "lax",
-            secure:false
-        });
-        res.cookie("type", type, {
-            httpOnly: false,
-            maxAge: 3600000,
-            sameSite: "lax",
-            secure: false
-        });
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 3600000, // 1 hour
+      sameSite: "lax",
+      secure: false,
+    });
+    res.cookie("type", type, {
+      httpOnly: false,
+      maxAge: 3600000,
+      sameSite: "lax",
+      secure: false,
+    });
 
-        const savedUser = await usermodel.verifyUserData(email); // create this function in your model
-res.cookie("userid", savedUser[0].id, {
-    httpOnly: false,
-    maxAge: 3600000,
-    sameSite: "lax",
-    secure: false
-});
-console.log(type, savedUser[0].id);
-        return res.status(201).json({ success: true, message: "User registered successfully", email, type });
-
-    } catch (err) {
-        console.error("Registration error:", err);
-        return res.status(500).json({ success: false, message: err.message });
-    }
+    const savedUser = await usermodel.verifyUserData(email); // create this function in your model
+    res.cookie("userid", savedUser[0].id, {
+      httpOnly: false,
+      maxAge: 3600000,
+      sameSite: "lax",
+      secure: false,
+    });
+    console.log(type, savedUser[0].id);
+    return res
+      .status(201)
+      .json({
+        success: true,
+        message: "User registered successfully",
+        email,
+        type,
+      });
+  } catch (err) {
+    console.error("Registration error:", err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
 };
 
 // Login
@@ -86,51 +91,52 @@ exports.LoginUserData = async (req, res) => {
         .json({ success: false, message: "Invalid email or password" });
     }
 
-        // JWT तयार करताना userid पण add करा
-        const token = jwt.sign(
-            { 
-                id: user[0].id || user[0]._id,   // DB वर अवलंबून
-                email: user[0].email, 
-                type: user[0].type 
-            }, 
-            SECRET_KEY, 
-            { expiresIn: "1h" }
-        );
+    // JWT तयार करताना userid पण add करा
+    const token = jwt.sign(
+      {
+        id: user[0].id || user[0]._id, // DB वर अवलंबून
+        email: user[0].email,
+        type: user[0].type,
+      },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
 
-        // cookies मध्ये token, type, userid set करा
-        res.cookie("token", token, {
-            httpOnly: false,
-            maxAge: 3600000, // 1 hour
-            sameSite: "lax",
-            secure: false
-        });
+    // cookies मध्ये token, type, userid set करा
+    res.cookie("token", token, {
+      httpOnly: false,
+      maxAge: 3600000, // 1 hour
+      sameSite: "lax",
+      secure: false,
+    });
 
-        res.cookie("type", user[0].type, {
-            httpOnly: false,
-            maxAge: 3600000,
-            sameSite: "lax",
-            secure: false
-        });
+    res.cookie("type", user[0].type, {
+      httpOnly: false,
+      maxAge: 3600000,
+      sameSite: "lax",
+      secure: false,
+    });
 
-        res.cookie("userid", user[0].id, {
-            httpOnly: false,   // frontend वर वापरायचे असल्यास false ठेवा
-            maxAge: 3600000,
-            sameSite: "lax",
-            secure: false
-        });
+    res.cookie("userid", user[0].id, {
+      httpOnly: false, // frontend वर वापरायचे असल्यास false ठेवा
+      maxAge: 3600000,
+      sameSite: "lax",
+      secure: false,
+    });
 
-        return res.status(200).json({
-            success: true,
-            message: "Login successful",
-            email: user[0].email,
-            type: user[0].type,
-            userid: user[0].id
-        });
-
-    } catch (err) {
-        console.error("Login error:", err);
-        return res.status(500).json({ success: false, message: "Something went wrong!" });
-    }
+    return res.status(200).json({
+      success: true,
+      message: "Login successful",
+      email: user[0].email,
+      type: user[0].type,
+      userid: user[0].id,
+    });
+  } catch (err) {
+    console.error("Login error:", err);
+    return res
+      .status(500)
+      .json({ success: false, message: "Something went wrong!" });
+  }
 };
 
 exports.logoutUser = (req, res) => {
@@ -142,25 +148,22 @@ exports.logoutUser = (req, res) => {
   });
 
   res.clearCookie("type", {
-    httpOnly: false,  // ha tu UI madhe access kartos mhanun httpOnly=false rahil
+    httpOnly: false, // ha tu UI madhe access kartos mhanun httpOnly=false rahil
     secure: false,
     sameSite: "lax",
   });
 
   res.clearCookie("userid", {
-    httpOnly: false,  // ha tu UI madhe access kartos mhanun httpOnly=false rahil
+    httpOnly: false, // ha tu UI madhe access kartos mhanun httpOnly=false rahil
     secure: false,
     sameSite: "lax",
   });
-
 
   return res.status(200).json({
     success: true,
     message: "Logged out successfully",
   });
 };
-
-
 
 // controllers/userController.js
 exports.getAdminProfile = async (req, res) => {
@@ -227,8 +230,7 @@ exports.saveUpdatedAdmin = async (req, res) => {
       password: req.body.password,
       age: req.body.age,
       type: req.body.type,
-      photo:
-       req.file ? req.file.filename : existingPhoto // जर नवीन photo असेल तर file use कर, नाहीतर जुनी ठेव
+      photo: req.file ? req.file.filename : existingPhoto, // जर नवीन photo असेल तर file use कर, नाहीतर जुनी ठेव
     };
 
     const result = await usermodel.updateAdminData(uid, updatedData);
@@ -248,20 +250,23 @@ exports.saveUpdatedAdmin = async (req, res) => {
   }
 };
 
-exports.getAllUsers=async (req,res)=>{
-    try{
-        let promise=usermodel.getUsers();
-        promise.then((result) => {
+exports.getAllUsers = async (req, res) => {
+  try {
+    let promise = usermodel.getUsers();
+    promise
+      .then((result) => {
         if (result && result.length > 0) {
-            res.status(200).json({result});
-        } 
-    }).catch((err) => {
+          res.status(200).json({ result });
+        }
+      })
+      .catch((err) => {
         res.status(404).json(err);
-    });
-    }catch(err){
-        console.error("Error fetching users:", err);
-        return res.status(500)
-    }}
+      });
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    return res.status(500);
+  }
+};
 
 exports.deleteUser = async (req, res) => {
   try {

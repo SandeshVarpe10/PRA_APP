@@ -25,21 +25,25 @@ function UserDashboard() {
       return;
     }
 
-    service.getCategory()
-      .then(res => setCategories(res.data.categories || []))
-      .catch(err => console.error("Error fetching categories:", err));
+    service
+      .getCategory()
+      .then((res) => setCategories(res.data.categories || []))
+      .catch((err) => console.error("Error fetching categories:", err));
 
-    service.getSubCat()
-      .then(res => setSubcategories(res.data.subcategories || []))
-      .catch(err => console.error("Error fetching subcategories:", err));
+    service
+      .getSubCat()
+      .then((res) => setSubcategories(res.data.subcategories || []))
+      .catch((err) => console.error("Error fetching subcategories:", err));
 
-    service.getUserHistory(userId)
-      .then(res => setHistoryProducts(res.data.products))
-      .catch(err => console.error("Error fetching history:", err));
+    service
+      .getUserHistory(userId)
+      .then((res) => setHistoryProducts(res.data.products))
+      .catch((err) => console.error("Error fetching history:", err));
 
-    service.getRecommendations(userId)
-      .then(res => setRecommended(res.data))
-      .catch(err => console.error("Error fetching recommendations:", err))
+    service
+      .getRecommendations(userId)
+      .then((res) => setRecommended(res.data))
+      .catch((err) => console.error("Error fetching recommendations:", err))
       .finally(() => setLoading(false));
   }, []);
 
@@ -53,7 +57,10 @@ function UserDashboard() {
       <div className="user-dashboard">
         <HistoryProducts historyProducts={historyProducts} />
         <Recommendations recommended={recommended} />
-        <CategorySection categories={categories} subcategories={subcategories} />
+        <CategorySection
+          categories={categories}
+          subcategories={subcategories}
+        />
       </div>
 
       <Footer />

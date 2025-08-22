@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; 
+import { useParams, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import service from "../service/service";
 import ProductCard from "./ProductCard";
-import Navbar from "./Navbar";  // ✅ import Navbar
+import Navbar from "./Navbar"; // ✅ import Navbar
 import "../css/productByCat.css";
 
 export default function ProductByCat() {
@@ -73,6 +73,6 @@ export default function ProductByCat() {
           </div>
         </div>
       )}
-   </>
+    </>
   );
 }

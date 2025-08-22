@@ -10,8 +10,7 @@ export default function Payment() {
   const totalAmount = cart.reduce((acc, item) => {
     const originalPrice = Number(item.price);
     const discount = Number(item.discount) || 0;
-    const discountedPrice =
-      originalPrice - (originalPrice * discount) / 100;
+    const discountedPrice = originalPrice - (originalPrice * discount) / 100;
     return acc + discountedPrice * item.quantity;
   }, 0);
 

@@ -40,10 +40,7 @@ function Footer() {
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/contact"
-                  className="text-light text-decoration-none"
-                >
+                <Link to="/contact" className="text-light text-decoration-none">
                   Contact Us
                 </Link>
               </li>

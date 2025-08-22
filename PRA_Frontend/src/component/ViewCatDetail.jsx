@@ -48,7 +48,10 @@ export default function ViewCatDetail() {
         </Link>
 
         {category && category.id && (
-          <Link to={`/updateCategory/${category.id}`} className="btn btn-update">
+          <Link
+            to={`/updateCategory/${category.id}`}
+            className="btn btn-update"
+          >
             ✏️ Update Category
           </Link>
         )}

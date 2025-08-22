@@ -8,7 +8,8 @@ export default function ViewProducts() {
   const [subcategories, setSubcategories] = useState([]);
 
   useEffect(() => {
-    service.getProduct()
+    service
+      .getProduct()
       .then((res) => {
         if (res.data.success) {
           setCategories(res.data.categories);
@@ -31,9 +32,15 @@ export default function ViewProducts() {
             {subcategories
               .filter((sub) => sub.category_id === category.id)
               .map((sub) => (
-                <Link to={`/products/${sub.subcategory_id}`} key={sub.subcategory_id}>
+                <Link
+                  to={`/products/${sub.subcategory_id}`}
+                  key={sub.subcategory_id}
+                >
                   <div className="subcategory-card">
-                    <img src={`/images/${sub.image}`} alt={sub.subcategory_name} />
+                    <img
+                      src={`/images/${sub.image}`}
+                      alt={sub.subcategory_name}
+                    />
                     <h4>{sub.subcategory_name}</h4>
                   </div>
                 </Link>

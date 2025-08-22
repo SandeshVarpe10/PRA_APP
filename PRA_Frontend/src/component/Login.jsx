@@ -4,7 +4,11 @@ import "../css/login.css";
 import service from "../service/service";
 
 function Login() {
-  const [formData, setFormData] = useState({ email: "", password: "", type: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    type: "",
+  });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -27,10 +31,11 @@ function Login() {
       } else {
         setError(response.data.message || "Invalid credentials");
       }
-
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || "Something went wrong. Please try again.");
+      setError(
+        err.response?.data?.message || "Something went wrong. Please try again."
+      );
     }
   };
 
@@ -81,7 +86,9 @@ function Login() {
             </select>
           </div>
 
-          <button type="submit" className="btn btn-login">Login</button>
+          <button type="submit" className="btn btn-login">
+            Login
+          </button>
 
           <div className="bottom-text">
             Don't have an account? <a href="/register">Register now</a>

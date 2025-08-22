@@ -8,8 +8,7 @@ export default function ViewUsers() {
   const [users, setUsers] = useState([]);
   const [msg, setMsg] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     service
@@ -52,7 +51,6 @@ export default function ViewUsers() {
           Users List
         </h2>
         <div className="card-body">
-
           <div className="d-flex justify-content-end mb-3">
             <input
               type="text"

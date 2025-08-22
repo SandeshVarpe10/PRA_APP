@@ -2,37 +2,37 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Navbar({ categories, searchNavigate = false,subcategoryId = null }) {
+function Navbar({ categories, searchNavigate = false, subcategoryId = null }) {
   console.log(subcategoryId);
   const token = Cookies.get("token");
   const userType = Cookies.get("type");
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
-  if (e.key === "Enter") {
-    const query = e.target.value.trim();
+    if (e.key === "Enter") {
+      const query = e.target.value.trim();
 
-    if (query.length === 0) {
-      if (subcategoryId) {
-        return;
-      } else {
-        navigate("/search-live");
-        return;
+      if (query.length === 0) {
+        if (subcategoryId) {
+          return;
+        } else {
+          navigate("/search-live");
+          return;
+        }
       }
+
+      const url = subcategoryId
+        ? `/search-live?subcategoryId=${subcategoryId}&query=${encodeURIComponent(
+            query
+          )}`
+        : `/search-live?query=${encodeURIComponent(query)}`;
+
+      navigate(url);
     }
-
-    const url = subcategoryId
-      ? `/search-live?subcategoryId=${subcategoryId}&query=${encodeURIComponent(query)}`
-      : `/search-live?query=${encodeURIComponent(query)}`;
-
-    navigate(url);
-  }
-};
-
+  };
 
   const handleSearchClick = () => {
     if (searchNavigate) {
-      
       navigate("/search-live");
     }
   };

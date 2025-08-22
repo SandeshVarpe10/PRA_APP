@@ -4,10 +4,10 @@ import service from "../service/service";
 
 export default function AddSubCategory() {
   const [formData, setFormData] = useState({
-  subCategoryName: "",
-  image: null,   // 👈 same name as backend expects
-  categoryId: "",
-});
+    subCategoryName: "",
+    image: null, // 👈 same name as backend expects
+    categoryId: "",
+  });
 
   const [categories, setCategories] = useState([]); // ✅ Store all categories
   const [msg, setMsg] = useState("");
@@ -16,9 +16,10 @@ export default function AddSubCategory() {
   useEffect(() => {
     service
       .getCategory() // <-- you need to have this API in your service
-      .then((res) =>{ 
-        console.log(res.data)
-        setCategories(res.data.categories)})
+      .then((res) => {
+        console.log(res.data);
+        setCategories(res.data.categories);
+      })
       .catch((err) => console.error("Error fetching categories:", err));
   }, []);
 
@@ -86,14 +87,14 @@ export default function AddSubCategory() {
               Subcategory Image
             </label>
             <input
-  type="file"
-  className="form-control"
-  id="subCategoryImage"
-  name="image"        // 👈 must match backend key
-  accept="image/*"
-  onChange={handleChange}
-  required
-/>
+              type="file"
+              className="form-control"
+              id="subCategoryImage"
+              name="image" // 👈 must match backend key
+              accept="image/*"
+              onChange={handleChange}
+              required
+            />
           </div>
 
           {/* Category Dropdown */}
@@ -128,7 +129,6 @@ export default function AddSubCategory() {
             </a>
           </div>
         </form>
-
       </div>
     </div>
   );

@@ -89,11 +89,11 @@ export default function ProductList() {
                   <td>{unitLabel}</td>
                   <td>
                     <Link
-                to={`/upd-product/${product.product_id}`}
-                className="subcat-btn update"
-              >
-                ✏️ Update
-              </Link>
+                      to={`/upd-product/${product.product_id}`}
+                      className="subcat-btn update"
+                    >
+                      ✏️ Update
+                    </Link>
                     <button
                       className="btn-delete"
                       onClick={() => handleDelete(product.product_id)}

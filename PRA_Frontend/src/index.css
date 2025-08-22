@@ -1,14 +1,15 @@
- .navbar-center {
+.navbar-center {
       flex: 1;
       display: flex;
       justify-content: center;
       gap: 10px;
-    }
-    .navbar-search {
-      width: 50%;
-    }
+}
 
-    .form-control {
+.navbar-search {
+      width: 50%;
+}
+
+.form-control {
   width: 100%;
   padding: 10px 12px;
   font-size: 15px;
@@ -26,8 +27,9 @@
 textarea.form-control {
   resize: none;
 }
-  body{
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #b3c3e6 0%, #fbb1bf 100%);
-    }
+
+body{      
+  margin: 0;   
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #b3c3e6 0%, #fbb1bf 100%);
+}

@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Service from "../service/service";
 import Cookies from "js-cookie";
-import ProductCard from "./ProductCard"; 
+import ProductCard from "./ProductCard";
 import HistoryProducts from "./HistoryProducts";
 import Recommendations from "./Recommendations";
 import CategorySection from "./CategorySection";
@@ -55,11 +55,10 @@ function SearchPage() {
           .then((res) => setSearchResults(res.data.pro || []))
           .catch((err) => console.error(err));
       } else {
-        
         Service.searchProducts(query)
           .then((res) => {
             // console.log(res.data);
-            setSearchResults(res.data.pro || [])
+            setSearchResults(res.data.pro || []);
           })
           .catch((err) => console.error(err));
       }
@@ -72,9 +71,9 @@ function SearchPage() {
 
   return (
     <>
-      <Navbar 
-        categories={categories} 
-        searchNavigate={!subcategoryId && !query} 
+      <Navbar
+        categories={categories}
+        searchNavigate={!subcategoryId && !query}
         subcategoryId={subcategoryId}
       />
 
@@ -84,7 +83,9 @@ function SearchPage() {
           <h3 className="recent-title">Search Results for "{query}"</h3>
           <div className="product-grid">
             {searchResults.length > 0 ? (
-              searchResults.map((p) => <ProductCard key={p.product_id} product={p} />)
+              searchResults.map((p) => (
+                <ProductCard key={p.product_id} product={p} />
+              ))
             ) : (
               <p>No products found.</p>
             )}
@@ -104,7 +105,9 @@ function SearchPage() {
                   <button
                     key={p.product_id}
                     className="recent-btn"
-                    onClick={() => navigate(`/search-live?query=${p.product_name}`)}
+                    onClick={() =>
+                      navigate(`/search-live?query=${p.product_name}`)
+                    }
                   >
                     {p.product_name}
                   </button>
@@ -115,13 +118,19 @@ function SearchPage() {
 
           <HistoryProducts historyProducts={historyProducts} />
           <Recommendations recommended={recommended} />
-          <CategorySection categories={categories} subcategories={subcategories} />
+          <CategorySection
+            categories={categories}
+            subcategories={subcategories}
+          />
         </>
       )}
 
       {/* ❌ Token नसेल */}
       {!token && !query && (
-        <CategorySection categories={categories} subcategories={subcategories} />
+        <CategorySection
+          categories={categories}
+          subcategories={subcategories}
+        />
       )}
 
       <Footer />

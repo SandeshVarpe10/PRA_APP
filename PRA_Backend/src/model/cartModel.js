@@ -1,62 +1,37 @@
 const db = require("../../db.js");
 
-// Add to cart
-exports.addToCart = (userId, productId, quantity, callback) => {
-  db.query(
-    "SELECT * FROM cart WHERE user_id=? AND product_id=?",
-    [userId, productId],
-    (err, result) => {
-      if (err) return callback(err);
+  exports.findByUserAndProduct=(userId, productId, callback)=>{
+    const query = "SELECT * FROM cart WHERE user_id = ? AND product_id = ?";
+    db.query(query, [userId, productId], callback);
+  }
 
-      if (result.length > 0) {
-        db.query(
-          "UPDATE cart SET quantity = quantity + ? WHERE user_id=? AND product_id=?",
-          [quantity, userId, productId],
-          callback
-        );
-      } else {
-        db.query(
-          "INSERT INTO cart (user_id, product_id, quantity) VALUES (?,?,?)",
-          [userId, productId, quantity],
-          callback
-        );
-      }
-    }
-  );
-};
+  exports.updateQuantityAdd=(userId, productId, quantity, callback)=>{
+    const query = "UPDATE cart SET quantity = quantity + ? WHERE user_id = ? AND product_id = ?";
+    db.query(query, [quantity, userId, productId], callback);
+  }
 
-// Get all cart items
-exports.getCart = (userId, callback) => {
-  db.query(
-    `SELECT 
-        c.cart_id, 
-        c.product_id, 
-        c.quantity, 
-        p.product_name, 
-        p.price, 
-        p.product_image
-     FROM cart c 
-     JOIN products p ON c.product_id = p.product_id 
-     WHERE c.user_id=?`,
-    [userId],
-    callback
-  );
-};
+  exports.insert=(userId, productId, quantity, callback)=>{
+    const query = "INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)";
+    db.query(query, [userId, productId, quantity], callback);
+  }
 
-// Remove from cart
-exports.removeFromCart = (userId, productId, callback) => {
-  db.query(
-    "DELETE FROM cart WHERE user_id=? AND product_id=?",
-    [userId, productId],
-    callback
-  );
-};
+  exports.getCartByUser=(userId, callback)=>{
+    const query = `
+      SELECT c.product_id, c.quantity, p.product_name, p.product_image, 
+             p.price, p.discount, (p.price - (p.price * p.discount / 100)) AS discounted_price
+      FROM cart c 
+      JOIN products p ON c.product_id = p.product_id 
+      WHERE c.user_id = ?`;
+    db.query(query, [userId], callback);
+  }
 
-// Update quantity
-exports.updateQuantity = (userId, productId, quantity, callback) => {
-  db.query(
-    "UPDATE cart SET quantity=? WHERE user_id=? AND product_id=?",
-    [quantity, userId, productId],
-    callback
-  );
-};
+  exports.remove=(userId, productId, callback)=> {
+    const query = "DELETE FROM cart WHERE user_id = ? AND product_id = ?";
+    db.query(query, [userId, productId], callback);
+  }
+
+  exports.updateQuantity=(userId, productId, quantity, callback)=> {
+    const query = "UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?";
+    db.query(query, [quantity, userId, productId], callback);
+  }
+

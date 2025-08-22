@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams,useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import service from "../service/service";
 import "../css/viewSubCategory.css";
 
@@ -8,7 +8,7 @@ export default function ViewSubCategory() {
   const [subcategories, setSubcategories] = useState([]);
   const [categoryName, setCategoryName] = useState("");
   const [msg, setMsg] = useState("");
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (categoryId) {
@@ -26,20 +26,20 @@ export default function ViewSubCategory() {
     }
   }, [categoryId]);
 
-const handleDelete = (Cid, Sid) => {
-  if (window.confirm("Are you sure you want to delete this subcategory?")) {
-    service.deleteSubCat(Cid, Sid)
-      .then((res) => {
-        setMsg(res.data.msg || "Subcategory deleted successfully!");
-        setSubcategories((prev) =>
-          prev.filter((subcat) => subcat.subcategory_id !== Sid)
-        );
-        navigate();
-      })
-      .catch(() => setMsg("Error deleting subcategory!"));
-  }
-};
-
+  const handleDelete = (Cid, Sid) => {
+    if (window.confirm("Are you sure you want to delete this subcategory?")) {
+      service
+        .deleteSubCat(Cid, Sid)
+        .then((res) => {
+          setMsg(res.data.msg || "Subcategory deleted successfully!");
+          setSubcategories((prev) =>
+            prev.filter((subcat) => subcat.subcategory_id !== Sid)
+          );
+          navigate();
+        })
+        .catch(() => setMsg("Error deleting subcategory!"));
+    }
+  };
 
   return (
     <div className="subcat-wrapper">
@@ -69,11 +69,13 @@ const handleDelete = (Cid, Sid) => {
                 <Link
                   to={`/deleteSubCat/${sub.category_id}/${sub.subcategory_id}`}
                   className="subcat-btn delete"
-                  onClick={() => handleDelete(sub.category_id,sub.subcategory_id)}
+                  onClick={() =>
+                    handleDelete(sub.category_id, sub.subcategory_id)
+                  }
                 >
                   🗑️ Delete
                 </Link>
-              
+
                 <Link
                   to={`/viewProBySubCat/${sub.subcategory_id}`}
                   className="subcat-btn product"
