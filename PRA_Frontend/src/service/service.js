@@ -126,6 +126,11 @@ class Service {
     return axios.get(`http://localhost:3000/searchProduct/${query}`);
   }
 
+   searchProductsBySubcategory(query,subcategoryId){
+    return axios.get(`http://localhost:3000/searchProductByCat/${query}/${subcategoryId}`);
+   }
+
+   
   }
 
 

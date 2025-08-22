@@ -45,8 +45,9 @@ exports.searchProductByCategory = async (req, res) => {
 exports.liveSearch = (req, res) => {
   const searchTerm = req.query.query || '';
   const categoryId = req.query.category || '';
+  console.log("hi",searchTerm,categoryId);
 
-  productmodel.searchProducts(searchTerm, categoryId)
+  productmodel.searchProductss(searchTerm, categoryId)
     .then((products) => {
       res.json(products);
     })
@@ -452,7 +453,7 @@ exports.getProBySubCat = async (req, res) => {
       });
     }
   } catch (err) {
-    console.error("Error fetching products:", err);
+  
     res.status(500).json({
       success: false,
       message: "Error fetching product details.",
@@ -475,7 +476,6 @@ exports.updateProductPage = async (req, res) => {
 
     res.render("UpdateProduct.ejs", { product, subcategories });
   } catch (err) {
-    console.error(err);
     res.status(500).send("Error loading update page.");
   }
 };
@@ -526,7 +526,6 @@ exports.updateProductSave = async (req, res) => {
       });
     }
   } catch (err) {
-    console.error("Error updating product:", err);
     return res.status(500).json({
       success: false,
       message: "Server error while updating product",
@@ -557,7 +556,8 @@ exports.deleteProduct = async (req, res) => {
 };
 
 exports.searchLiveProduct = async (req, res) => {
-  const query = req.params.query;   // frontend कडून ?query=milk
+  const query = req.params.query;  
+  console.log("Pppp",query); // frontend कडून ?query=milk
   
 
   try {
@@ -577,7 +577,36 @@ exports.searchLiveProduct = async (req, res) => {
     }
 
   } catch (err) {
-    console.error(err);
+  
+    res.status(500).json({
+      success: false,
+      message: "Error searching products."
+    });
+  }
+};
+exports.searchLiveProductById = async (req, res) => {
+  const query = req.params.query;  
+  const subcategoryId=req.params.subcategoryid;
+  
+
+  try {
+    const products = await productmodel.searchLiveProductsById(query,subcategoryId);
+
+    if (products && products.length > 0) {
+      res.json({
+        success: true,
+        pro: products
+      });
+    } else {
+      res.json({
+        success: true,
+        data: [],
+        message: "No products found"
+      });
+    }
+
+  } catch (err) {
+  
     res.status(500).json({
       success: false,
       message: "Error searching products."

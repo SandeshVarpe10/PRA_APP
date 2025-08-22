@@ -22,7 +22,7 @@ function Home() {
 
   return (
     <>
-      <Navbar categories={categories} />
+      <Navbar categories={categories} searchNavigate={true} />
       <SubCategoryBar subcategories={subcategories} />
       <CategorySection categories={categories} subcategories={subcategories} />
       <Footer />

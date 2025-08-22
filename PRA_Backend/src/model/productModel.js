@@ -61,7 +61,7 @@ exports.searchProductByCategory = (categoryName) => {
   });
 };
 
-exports.searchProducts = (searchTerm, categoryId) => {
+exports.searchProductss = (searchTerm, categoryId) => {
   let sql = `
     SELECT p.*
     FROM products p
@@ -348,10 +348,25 @@ exports.searchLiveProducts = (query) => {
         if (err) {
           reject(err);
         } else {
-          console.log("Search result:", result);
+          
           resolve(result);
         }
       }
     );
   })
 }
+exports.searchLiveProductsById = (query, subcategoryId) => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT * FROM products WHERE subcategory_id = ? AND (product_name LIKE ? OR description LIKE ?)",
+      [subcategoryId, `%${query}%`, `%${query}%`],
+      (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      }
+    );
+  });
+};

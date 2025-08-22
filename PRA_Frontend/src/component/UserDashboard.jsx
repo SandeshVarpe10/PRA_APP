@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import service from "../service/service";
-import cartService from "../service/cartService";
+// import cartService from "../service/cartService";
 import Cookies from "js-cookie";
 
 import Navbar from "./Navbar";
@@ -47,7 +47,7 @@ function UserDashboard() {
 
   return (
     <>
-      <Navbar categories={categories} />
+      <Navbar categories={categories} searchNavigate={true} />
       <SubCategoryBar subcategories={subcategories} />
 
       <div className="user-dashboard">
