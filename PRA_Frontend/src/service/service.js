@@ -5,7 +5,7 @@ class Service {
     return axios.get("http://localhost:3000/view-category");
   }
   getAllSubcategories() {
-    return axios.get("http://localhost:3000/view-subcategory"); // or your actual endpoint
+    return axios.get("http://localhost:3000/view-subcategory"); 
   }
   getSubCat() {
     return axios.get("http://localhost:3000/view-subcategory");
@@ -14,6 +14,11 @@ class Service {
   return axios.post(`http://localhost:3000/updatesubcategory/${Cid}/${Sid}`, formData, {
     headers: { "Content-Type": "multipart/form-data" }
   });
+
+}
+
+getSubCatBySid(Sid) {
+  return axios.get(`http://localhost:3000/view-subcategory/${Sid}`);
 }
 
   
@@ -25,8 +30,8 @@ class Service {
   deleteSubCat(Cid, Sid){
     return axios.get(`http://localhost:3000/deleteSubCat/${Cid}/${Sid}`);
   }
- getSubCatById(Cid) {
-    return axios.get(`http://localhost:3000/view-subcategories/${Cid}`);
+ getSubCatById(Sid) {
+    return axios.get(`http://localhost:3000/view-subcategories/${Sid}`);
   }
 
   saveProduct(product) {
@@ -111,10 +116,12 @@ class Service {
   }
 
   getUserHistory(userId) {
-    console.log(userId);
     let promise= axios.get(`http://localhost:3000/userHistory/${userId}`);
     console.log("ppp",promise);
     return promise;
+  }
+  deleteUser(userId){
+      return axios.get(`http://localhost:3000/delete-user/${userId}`);
   }
 
   // 2️⃣ Recommendations based on CBF

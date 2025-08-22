@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // ✅ import useParams
+import { useParams, Link } from "react-router-dom"; // ✅ import useParams
 import service from "../service/service";
 import "../css/productList.css";
 
@@ -88,12 +88,12 @@ export default function ProductList() {
                   <td>{product.stock}</td>
                   <td>{unitLabel}</td>
                   <td>
-                    <button
-                      className="btn-edit"
-                      onClick={() => alert("Edit product " + product.product_id)}
-                    >
-                      ✏️ Update
-                    </button>
+                    <Link
+                to={`/upd-product/${product.product_id}`}
+                className="subcat-btn update"
+              >
+                ✏️ Update
+              </Link>
                     <button
                       className="btn-delete"
                       onClick={() => handleDelete(product.product_id)}

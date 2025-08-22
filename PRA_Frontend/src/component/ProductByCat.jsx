@@ -48,10 +48,10 @@ export default function ProductByCat() {
 
   return (
     <div>
-      <h2 className="page-title">Our Featured Products</h2>
+      <h2 className="page-title m-5">Our Featured Products</h2>
       <div className="product-grid">
         {products.map((product) => (
-          <ProductCard key={product.product_id} product={product} userType={userType} navigate={navigate} />
+          <ProductCard key={product.product_id} initialProduct={product} userType={userType} navigate={navigate} />
         ))}
       </div>
     </div>

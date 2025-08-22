@@ -1,5 +1,5 @@
 /* ===== EditAdminProfile.css ===== */
-
+/* 
 :root {
   --bg: #0f1221;
   --card: #161a2f;
@@ -9,7 +9,7 @@
   --accent-2: #7aa2ff;
   --border: #2a3050;
   --success: #38d39f;
-}
+} */
 
 * { box-sizing: border-box; }
 
@@ -18,10 +18,12 @@
   display: grid;
   place-items: center;
   padding: 24px;
-  background: radial-gradient(1200px 600px at 10% -10%, #1b2040 0%, transparent 60%),
+  /* background: radial-gradient(1200px 600px at 10% -10%, #1b2040 0%, transparent 60%),
               radial-gradient(900px 500px at 110% 10%, #2a1f35 0%, transparent 60%),
-              var(--bg);
+              var(--bg); */
   color: var(--text);
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+
 }
 
 .edit-profile-form {
@@ -35,7 +37,7 @@
   box-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
 
-.edit-profile-form h2,
+/* .edit-profile-form h2,
 .edit-profile-container > h2 {
   margin: 0 0 14px;
   font-size: 24px;
@@ -44,13 +46,18 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}
+} */
 
 /* form groups */
 .form-group {
   display: grid;
   gap: 8px;
   margin-bottom: 14px;
+}
+
+.form-control{
+  border: 1px solid black;
+  background: #e2e2e2;
 }
 
 .form-group label {
@@ -68,9 +75,9 @@
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background: #11152a;
   color: var(--text);
   outline: none;
+  color: #7c85a3;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.02s ease;
 }
 
@@ -112,12 +119,13 @@
   margin-top: 8px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  color: #0b0f1e;
+  /* background: linear-gradient(90deg, var(--accent), var(--accent-2)); */
+  color: #ffffff;
   font-weight: 700;
   letter-spacing: 0.3px;
   cursor: pointer;
   transition: transform 0.06s ease, filter 0.2s ease;
+  background: linear-gradient(120deg, #ff123e, #3662c0); 
 }
 
 .btn-save:hover {
@@ -141,13 +149,13 @@
 }
 
 /* nice subtle divider between groups (optional) */
-.form-group:not(:last-child) {
+/* .form-group:not(:last-child) {
   position: relative;
-}
-.form-group:not(:last-child)::after {
+} */
+/* .form-group:not(:last-child)::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: -7px;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border), transparent);
-}
+} */

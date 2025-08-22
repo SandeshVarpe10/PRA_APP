@@ -8,9 +8,26 @@
       width: 50%;
     }
 
+    .form-control {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-control:focus {
+  /* border-color: #8d223b78; */
+  box-shadow: 0 0 6px rgba(243, 15, 117, 0.63) !important;
+}
+
+textarea.form-control {
+  resize: none;
+}
   body{
       margin: 0;
       font-family: 'Poppins', sans-serif;
-          background: linear-gradient(135deg, #b3c3e6 0%, #fbb1bf 100%);
-
+      background: linear-gradient(135deg, #b3c3e6 0%, #fbb1bf 100%);
     }

@@ -192,6 +192,21 @@ exports.viewSubCategory = async (req, res) => {
   }
 };
 
+exports.getSubCategoryById = async (req, res) => {
+  try {
+    const subcategoryId = req.params.Sid;
+    const subcat = await productmodel.getSubCategoryById(subcategoryId);
+
+    if (!subcat || subcat.length === 0) {
+      return res.status(404).json({ success: false, msg: "Subcategory not found" });
+    }
+
+    res.json({ success: true, subcategories: subcat });
+  } catch (err) {
+    console.error("Error fetching subcategory:", err);
+    res.status(500).json({ success: false, msg: "Error fetching subcategory" });
+  }
+};
 
 exports.deleteSubCatByID = async (req, res) => {
   try {

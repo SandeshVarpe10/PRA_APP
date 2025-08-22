@@ -31,6 +31,7 @@
 
 .form-group {
   margin-bottom: 18px;
+  border: none;
 }
 
 .form-group label {
@@ -40,24 +41,24 @@
   color: #444;
 }
 
-.form-control {
+/* .form-control {
   width: 100%;
   padding: 10px 12px;
   font-size: 15px;
-  border: 1px solid #ccc;
   border-radius: 8px;
+  border: none;
   outline: none;
   transition: all 0.3s ease-in-out;
 }
 
 .form-control:focus {
   border-color: #fd3f6cee;
-  box-shadow: 0 0 6px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 0 6px rgba(13, 69, 15, 0.63);
 }
 
 textarea.form-control {
   resize: none;
-}
+} */
 
 .product-image-preview {
   max-width: 120px;

@@ -87,7 +87,8 @@ data.append("organic", formData.organic === "true" ? 1 : 0);
   };
 
   return (
-    <div className="form-container">
+    <div className="upd-container">
+      <div className="form-container">
       <h2 className="form-title">Update Product Details</h2>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -263,6 +264,7 @@ data.append("organic", formData.organic === "true" ? 1 : 0);
           Update Product
         </button>
       </form>
+    </div>
     </div>
   );
 }

@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import cartService from "../service/cartService";
+import service from "../service/service";
 import "../css/productCard.css";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ initialProduct }) => {
   const navigate = useNavigate();
   const userType = Cookies.get("type"); // cookie madhun user type ghetla
+
+  // product state instead of prop
+  const [product, setProduct] = useState(initialProduct);
 
   const handleAddToCart = async () => {
     const userId = Cookies.get("userid");
@@ -25,9 +29,21 @@ const ProductCard = ({ product }) => {
   };
 
   const handleDelete = (id) => {
-    // delete logic (api call) tya navin service madhun
-    console.log("Delete product with ID:", id);
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      service
+        .deleteProduct(id)
+        .then(() => {
+          // instead of setProducts, just clear local product
+          setProduct(null);
+        })
+        .catch((err) => {
+          console.error("Error deleting product:", err);
+        });
+    }
   };
+
+  // if product is deleted, don't render the card
+  if (!product) return null;
 
   const originalPrice = parseFloat(product.price);
   const discountPercent = parseFloat(product.discount);

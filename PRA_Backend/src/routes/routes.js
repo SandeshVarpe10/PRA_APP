@@ -20,12 +20,12 @@ router.put("/updatedData/:uid",upload.single("photo"), userCtrl.saveUpdatedAdmin
 //router.get("/adminDashboard", getUserFromToken, userCtrl.adminDashboard);
 router.get("/Adminlogout", userCtrl.logoutUser);
 //router.get("/profile",getUserFromToken,userCtrl.ShowUserProfile);
-router.get("/Profile", getUserFromToken, userCtrl.getAdminProfile);
-router.get("/UpdataAdminProfile/:uid",userCtrl.getAdminData)
-router.put("/updatedData/:uid", userCtrl.saveUpdatedAdmin);
+// router.get("/Profile", getUserFromToken, userCtrl.getAdminProfile);
+// router.get("/UpdataAdminProfile/:uid",userCtrl.getAdminData)
+// router.put("/updatedData/:uid", userCtrl.saveUpdatedAdmin);
 
 //router.get("/adminDashboard", getUserFromToken, userCtrl.adminDashboard);
-router.get("/Adminlogout", userCtrl.logoutUser);
+// router.get("/Adminlogout", userCtrl.logoutUser);
 //router.get("/profile",getUserFromToken,userCtrl.ShowUserProfile);
 
 
@@ -50,6 +50,7 @@ router.get("/add-subcategory/:Cid", productCtrl.addSubCategoryPage);
 router.get("/view-subcategory", productCtrl.getAllSubCat);
 router.post("/subcategorysave",upload.single("image"), productCtrl.saveSubCategory);
 router.get("/view-subcategories/:Cid", productCtrl.viewSubCategory);
+router.get("/view-subcategory/:Sid", productCtrl.getSubCategoryById);
 router.get("/viewProBySubCat/:Sid",productCtrl.getProBySubCat);
 router.get("/deleteSubCat/:Cid/:Sid",productCtrl.deleteSubCatByID);
 router.post("/updatesubcategory/:Cid/:Sid",upload.single("image"),productCtrl.updateSubCategorySave);

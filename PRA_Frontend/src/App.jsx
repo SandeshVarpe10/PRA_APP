@@ -26,6 +26,7 @@ import AddSubCategory from './component/AddSubCategory';
 import ProtectedRoute from './component/ProtectedRoute';
 import SearchPage from './component/SearchPage';
 import UpdateProduct from './component/UpdateProduct';
+import Payment from './component/Payment';
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path='/add-subcategory'  element={<AddSubCategory/>}></Route>
           <Route path='/cart'  element={<ProtectedRoute allowedTypes={["user"]}><Cart/></ProtectedRoute>}></Route>
           <Route path='/search-live' element={<SearchPage/>}></Route>
+          <Route path="/payment" element={<Payment/>} />
         </Routes>
       </BrowserRouter>
     </>

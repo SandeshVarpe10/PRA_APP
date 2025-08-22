@@ -61,8 +61,12 @@ function EditAdminProfile() {
     data.append("password", formData.password);
     data.append("age", formData.age);
     data.append("type", formData.type);
-    data.append("photo", formData.photo); // only append if new file
-    console.log(formData.photo);
+    if (formData.photo instanceof File) {
+  data.append("photo", formData.photo);
+} else {
+  data.append("existingPhoto", formData.photo); // ✅ old photo filename
+}
+
     
     service.updateAdminData(uid, data)
       .then((res) => {

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import service from "../service/service"; // adjust path as needed
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -6,6 +8,8 @@ export default function ViewUsers() {
   const [users, setUsers] = useState([]);
   const [msg, setMsg] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
+
 
   useEffect(() => {
     service
@@ -25,6 +29,7 @@ export default function ViewUsers() {
         .then((res) => {
           setMsg(res.data.msg || "User deleted successfully!");
           setUsers((prev) => prev.filter((user) => user.id !== id));
+          setTimeout(() => navigate("/get-users"), 500);
         })
         .catch(() => setMsg("Error deleting user!"));
     }

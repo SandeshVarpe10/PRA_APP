@@ -29,7 +29,7 @@ export default function UpdateSubCategory() {
 
     // Fetch subcategory details
     service
-      .getSubCatById(Cid)
+      .getSubCatBySid(Sid)
       .then((res) => {
         const subcat = res.data.subcategories[0];
         if (subcat) {
