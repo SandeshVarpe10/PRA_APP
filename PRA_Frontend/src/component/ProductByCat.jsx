@@ -32,6 +32,7 @@ export default function ProductByCat() {
     service
       .getProductBySubCat(subcategoryId)
       .then((res) => {
+        console.log(res.data);
         setProducts(res.data);
         setLoading(false);
       })
@@ -72,6 +73,6 @@ export default function ProductByCat() {
           </div>
         </div>
       )}
-    </>
+   </>
   );
 }

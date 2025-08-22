@@ -340,12 +340,14 @@ exports.updatesavesubcategory = (subcategoryId, subcategory_name, image, categor
 };
 
 exports.searchLiveProducts = (query) => {
+  
   return new Promise((resolve, reject) => {
     db.query(
       "SELECT * FROM products WHERE product_name LIKE ? OR description LIKE ?",
       [`%${query}%`, `%${query}%`],
       (err, result) => {
         if (err) {
+        
           reject(err);
         } else {
           

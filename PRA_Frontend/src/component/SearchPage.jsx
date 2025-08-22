@@ -55,15 +55,12 @@ function SearchPage() {
           .then((res) => setSearchResults(res.data.pro || []))
           .catch((err) => console.error(err));
       } else {
+        
         Service.searchProducts(query)
-          .then((res) => setSearchResults(res.data.pro || []))
-          .catch((err) => console.error(err));
-      }
-    }else{
-      if(subcategoryId)
-      {
-        Service.searchProductsBySubcategoryQuryNot(subcategoryId)
-          .then((res) => setSearchResults(res.data.pro || []))
+          .then((res) => {
+            // console.log(res.data);
+            setSearchResults(res.data.pro || [])
+          })
           .catch((err) => console.error(err));
       }
     }

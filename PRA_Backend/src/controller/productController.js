@@ -572,8 +572,7 @@ exports.deleteProduct = async (req, res) => {
 
 exports.searchLiveProduct = async (req, res) => {
   const query = req.params.query;  
-  console.log("Pppp",query); // frontend कडून ?query=milk
-  
+
 
   try {
     const products = await productmodel.searchLiveProducts(query);
@@ -582,6 +581,7 @@ exports.searchLiveProduct = async (req, res) => {
       res.json({
         success: true,
         pro: products
+        
       });
     } else {
       res.json({

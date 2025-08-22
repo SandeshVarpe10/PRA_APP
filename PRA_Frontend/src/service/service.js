@@ -130,6 +130,7 @@ getSubCatBySid(Sid) {
     return axios.get(`http://localhost:3000/recommendations/${userId}`);
   }
   searchProducts(query){
+    
     return axios.get(`http://localhost:3000/searchProduct/${query}`);
   }
 
