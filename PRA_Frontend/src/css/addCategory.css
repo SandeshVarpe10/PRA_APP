@@ -27,11 +27,11 @@
   padding-left: 0;    
   margin-left: 0;     
 }
-.form-control {
-  border: 2px solid #ccc;   /* thicker visible border */
-  border-radius: 10px;      /* keep your rounded style */
-  background-color: #fff;   /* white background so it's not transparent */
-}
+/* .form-control {
+  border: 2px solid #ccc;   
+  border-radius: 10px;      
+  background-color: #fff;   
+} */
 
 /* Cancel button */
 /* .btn-secondary {

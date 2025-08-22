@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Service from "../service/cartService.js";
 import "../css/cart.css";
 import Cookie from "js-cookie";
@@ -7,6 +8,7 @@ import Cookie from "js-cookie";
 export default function Cart() {
   const [cart, setCart] = useState([]);
   const userId=Cookie.get("userid");
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     Service.getCart(userId).then((res) => setCart(res.data));
@@ -104,23 +106,29 @@ export default function Cart() {
 </div>
 
       )}
-      {cart.length > 0 && (
-        <div className="cart-summary">
-          <h4 className="cart-summary-price">
-            Total: ₹
-            {cart
-              .reduce((acc, item) => {
-                const originalPrice=Number(item.price);  //string to number
-                const discount=Number(item.discount) || 0;
-                const discountedPrice =originalPrice-(originalPrice*discount)/100;
-                return acc + discountedPrice * item.quantity;
-              }, 0)
-              .toFixed(2)}
-          </h4>
+     {cart.length > 0 && (
+      <div className="cart-summary">
+        <h4 className="cart-summary-price">
+          Total: ₹
+          {cart
+            .reduce((acc, item) => {
+              const originalPrice = Number(item.price);
+              const discount = Number(item.discount) || 0;
+              const discountedPrice =
+                originalPrice - (originalPrice * discount) / 100;
+              return acc + discountedPrice * item.quantity;
+            }, 0)
+            .toFixed(2)}
+        </h4>
 
-          <button className="checkout-btn">Proceed to Checkout</button>
-        </div>
-      )}
+        <button
+          className="checkout-btn"
+          onClick={() => navigate("/payment", { state: { cart } })}
+        >
+          Proceed to Payment
+        </button>
+      </div>
+    )}
     </div>
   );
 }

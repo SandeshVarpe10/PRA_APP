@@ -219,7 +219,7 @@ exports.getAdminData = async (req, res) => {
 exports.saveUpdatedAdmin = async (req, res) => {
   try {
     const uid = req.params.uid;
-
+    const existingPhoto = req.body.existingPhoto || null;
     // multer file + body data
     const updatedData = {
       name: req.body.name,
@@ -227,7 +227,8 @@ exports.saveUpdatedAdmin = async (req, res) => {
       password: req.body.password,
       age: req.body.age,
       type: req.body.type,
-      photo: req.file ? req.file.filename : req.body.oldPhoto // जर नवीन photo असेल तर file use कर, नाहीतर जुनी ठेव
+      photo:
+       req.file ? req.file.filename : existingPhoto // जर नवीन photo असेल तर file use कर, नाहीतर जुनी ठेव
     };
 
     const result = await usermodel.updateAdminData(uid, updatedData);

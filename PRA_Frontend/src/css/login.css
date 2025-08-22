@@ -28,7 +28,7 @@
       font-weight: 600;
     }
 
-    .form-group .form-control {
+    /* .form-group .form-control {
       border: none;
       border-radius: 25px;
       color: #000000;
@@ -37,7 +37,7 @@
 
     .form-control::placeholder {
       color: #767676;
-    }
+    } */
 
     .form-group label {
       color: rgb(255, 255, 255);

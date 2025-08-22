@@ -35,21 +35,21 @@
 }
 
 /* Input and select fields - more specific to override Bootstrap */
-.form-container .form-control.formData {
-  border: 1px solid #ced4da !important; /* Force visible border */
+/* .form-container .form-control.formData {
+  border: 1px solid #ced4da !important; 
   border-radius: 8px;
   padding: 10px 14px;
   transition: all 0.2s ease-in-out;
   background-color: #fff;
-  box-shadow: none; /* Remove Bootstrap's inner shadows */
-}
+  box-shadow: none; 
+} */
 
 /* On focus */
-.form-container .form-control.formData:focus {
+/* .form-container .form-control.formData:focus {
   border: 1px solid #9f1c4c !important;
   box-shadow: 0 0 0 0.15rem rgba(134, 2, 64, 0.25) !important;
   outline: none;
-}
+} */
 
 /* File input */
 .form-container input[type="file"].formData {
