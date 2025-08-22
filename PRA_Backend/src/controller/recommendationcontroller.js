@@ -1,7 +1,6 @@
 const recommendationModel = require("../model/recommendations.js");
 let db=require("../../db.js")
 
-// 1️⃣ User history
 exports.getUserHistory = async (req, res) => {
   const userId = req.params.userId;
 
@@ -45,7 +44,6 @@ exports.getUserHistory = async (req, res) => {
       });
     });
 
-    // 🔑 structured response
     res.status(200).json({ products: history });
   } catch (err) {
     res.status(500).json({ message: "Error fetching history", error: err });
@@ -53,7 +51,6 @@ exports.getUserHistory = async (req, res) => {
 };
 
 
-// 2️⃣ Recommendations
 exports.getRecommendations = async (req, res) => {
     const userId = req.params.userId;
     try {

@@ -91,7 +91,7 @@ exports.LoginUserData = async (req, res) => {
         .json({ success: false, message: "Invalid email or password" });
     }
 
-    // JWT तयार करताना userid पण add करा
+
     const token = jwt.sign(
       {
         id: user[0].id || user[0]._id, // DB वर अवलंबून
@@ -102,10 +102,9 @@ exports.LoginUserData = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    // cookies मध्ये token, type, userid set करा
     res.cookie("token", token, {
       httpOnly: false,
-      maxAge: 3600000, // 1 hour
+      maxAge: 3600000,
       sameSite: "lax",
       secure: false,
     });
@@ -118,7 +117,7 @@ exports.LoginUserData = async (req, res) => {
     });
 
     res.cookie("userid", user[0].id, {
-      httpOnly: false, // frontend वर वापरायचे असल्यास false ठेवा
+      httpOnly: false,
       maxAge: 3600000,
       sameSite: "lax",
       secure: false,
@@ -140,21 +139,20 @@ exports.LoginUserData = async (req, res) => {
 };
 
 exports.logoutUser = (req, res) => {
-  // clear all cookies related to auth
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false, // production madhe true kara
+    secure: false, 
     sameSite: "lax",
   });
 
   res.clearCookie("type", {
-    httpOnly: false, // ha tu UI madhe access kartos mhanun httpOnly=false rahil
+    httpOnly: false, 
     secure: false,
     sameSite: "lax",
   });
 
   res.clearCookie("userid", {
-    httpOnly: false, // ha tu UI madhe access kartos mhanun httpOnly=false rahil
+    httpOnly: false,
     secure: false,
     sameSite: "lax",
   });
@@ -202,7 +200,7 @@ exports.getAdminProfile = async (req, res) => {
 exports.getAdminData = async (req, res) => {
   try {
     const uid = req.params.uid;
-    const Admin = await usermodel.getAdminData(uid); // fetch admin by UID
+    const Admin = await usermodel.getAdminData(uid); 
 
     if (!Admin || Admin.length === 0) {
       return res
@@ -210,7 +208,6 @@ exports.getAdminData = async (req, res) => {
         .json({ success: false, message: "Admin Not Found" });
     }
 
-    // Send the admin data as response
     return res.status(200).json(Admin);
   } catch (err) {
     console.error(err);
@@ -218,19 +215,18 @@ exports.getAdminData = async (req, res) => {
   }
 };
 
-// Update admin profile
+
 exports.saveUpdatedAdmin = async (req, res) => {
   try {
     const uid = req.params.uid;
     const existingPhoto = req.body.existingPhoto || null;
-    // multer file + body data
     const updatedData = {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
       age: req.body.age,
       type: req.body.type,
-      photo: req.file ? req.file.filename : existingPhoto, // जर नवीन photo असेल तर file use कर, नाहीतर जुनी ठेव
+      photo: req.file ? req.file.filename : existingPhoto, 
     };
 
     const result = await usermodel.updateAdminData(uid, updatedData);

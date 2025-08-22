@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import cartService from "../service/cartService";
 import "../css/productCard.css";
+import service from "../service/service";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
@@ -24,10 +25,18 @@ const ProductCard = ({ product }) => {
     }
   };
 
-  const handleDelete = (id) => {
-    // delete logic (api call) tya navin service madhun
-    console.log("Delete product with ID:", id);
-  };
+  const handleDelete = async (id) => {
+  if (!window.confirm("Are you sure you want to delete this product?")) return;
+
+  try {
+    await service.deleteProduct(id);
+    alert("Product deleted successfully!");
+    window.location.reload(); 
+  } catch (err) {
+    console.error("Error deleting product:", err);
+    alert("Failed to delete product.");
+  }
+};
 
   const originalPrice = parseFloat(product.price);
   const discountPercent = parseFloat(product.discount);

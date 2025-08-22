@@ -35,7 +35,7 @@ router.get("/delete-user/:uid",userCtrl.deleteUser);
 
 //category routes
 
-router.get("/add-category", productCtrl.addCategoryPage);
+// router.get("/add-category", productCtrl.addCategoryPage);
 router.post("/savecategory", productCtrl.saveCategory);
 router.get("/view-category", productCtrl.viewCategory);
 router.get("/searchProductByCategory", productCtrl.searchProductByCategory);
@@ -70,8 +70,7 @@ router.get("/updateProduct/:product_id", productCtrl.updateProductPage);
 router.post("/productupdatesave/:product_id", upload.single("product_image"), productCtrl.updateProductSave);
 router.get("/deleteProduct/:product_id", productCtrl.deleteProduct);
 router.get("/searchProduct/:query",productCtrl.searchLiveProduct);
-router.get("/searchProductByCat/:query/:subcategoryid",productCtrl.searchLiveProductById)
-
+router.get("/searchProductByCat/:query/:subcategoryid",productCtrl.searchLiveProductById);
 
 
 //cart routes
